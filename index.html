@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-tuch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/style.css">
     <title>PokéJOBS</title>
 </head>
-<body>
-    
+<body class="w-full max-w-full bg-blue-900 overflow-x-hidden">
+    <header class="w-full h-20 bg-yellow-300 px-6 flex justify-between items-center">
+        <img src="assets/images/logo.png" class="h-full" alt="PokéJobs logo" aria-hidden="true">
+        <nav class="mx-4">
+            <a href="#" class="mx-6 hover:text-[#B22E1C]"> <span class="sprite mx-2"> M </span>Home</a> 
+            <a href="#" class="mx-6 hover:text-[#B22E1C]"> <span class="sprite mx-2"> Q </span>Add a JOB</a> 
+        </nav>
+    </header>
+    <section class="flex justify-center py-6 w-full">
+        <div class="hero-text flex flex-col w-full md:w-8/12 text-yellow-300 text-lg md:text-2xl text-center md:text-start items-center">
+            <h2 class="my-2 md:self-start">Tired of battling all day at your trainer's request?</h2>
+            <h2 class="my-2 md:self-end">Bored of always being inside your <img src="assets/images/pokeball.png" class="w-7 inline" alt="pokéball" aria-hidden="true"> ?</h2>
+            <h2 class="my-2 md:self-center">It's time to set yourself <span class="free">free </span>!</h2>
+        </div>
+    </section>
 </body>
 </html>
