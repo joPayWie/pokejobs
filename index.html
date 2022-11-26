@@ -9,18 +9,41 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style/style.css">
     <title>PokéJOBS</title>
 </head>
 <body class="w-full max-w-full bg-blue-900 overflow-x-hidden">
-    <header class="w-full h-20 bg-yellow-300 px-6 flex justify-between items-center">
+    <!-- navbar -->
+    <header class="h-20 bg-yellow-300 px-6 flex justify-between items-center">
         <img src="assets/images/logo.png" class="h-full" alt="PokéJobs logo" aria-hidden="true">
-        <nav class="mx-4">
+        <nav class="mx-4 hidden md:flex md:flex-row md:justify-between md:text-lg">
             <a href="#" class="mx-6 hover:text-[#B22E1C]"> <span class="sprite mx-2"> M </span>Home</a> 
-            <a href="#" class="mx-6 hover:text-[#B22E1C]"> <span class="sprite mx-2"> Q </span>Add a JOB</a> 
+            <a href="#" class="add-job-link mx-6 hover:text-[#B22E1C]"> <span class="sprite mx-2"> Q </span>Add a JOB</a> 
         </nav>
+        <!-- header burger menu -->
+        <div class="md:hidden flex items-center">
+            <button class="outline-none mobile-menu-button">
+                <div class="bg-[#B22E1C] flex justify-center rounded  py-2 pl-3 pr-0">
+                    <i id="burger-icon-lines" class="fa-solid fa-bars text-4xl mr-3 "></i>
+                    <i id="burger-icon-xmark"
+                        class="hidden fa-solid fa-xmark text-4xl pl-1 pr-4"></i>
+                </div>
+            </button>
+        </div>
     </header>
+    <div class="hidden md:hidden w-full mobile-menu bg-[#B22E1C]">
+                <a href="#"
+                    class="block text-center text-sm px-2 py-4 text-white font-semibold hover:bg-white hover:text-black transition duration-200">
+                    Home 
+                </a>
+                <a href="#"
+                    class="block text-center tag-show-link text-sm px-2 py-4 text-white  font-semibold hover:bg-white hover:text-black transition duration-200">
+                    Add a JOB 
+                </a>
+    </div>
+    <!-- hero  -->
     <section class="flex justify-center py-6 w-full">
         <div class="hero-text flex flex-col w-full md:w-8/12 text-yellow-300 text-lg md:text-2xl text-center md:text-start items-center">
             <h2 class="my-2 md:self-start">Tired of battling all day at your trainer's request?</h2>
@@ -28,5 +51,31 @@
             <h2 class="my-2 md:self-center">It's time to set yourself <span class="free">free </span>!</h2>
         </div>
     </section>
+    <section class="fixed-img flex justify-center md:w-full h-48">
+        <div class="hero-welcome flex flex-col md:flex-row justify-center items-center">
+            <img src="assets/images/logo.png" class="w-56 md:w-72" alt="PokéJobs logo" aria-hidden="true"> <h2 class="free free-hero text-white"> is the site for you! </h2>
+        </div>
+    </section>
+    <section class="flex justify-center">
+        <div class="flex bg-[#123269] min-w-fit min-h-fit items-center my-10 rounded font-semibold text-lg text-white text-center">
+            <div class="p-3">
+                At PokéJOBS, both humans and Pokémon can share available jobs exclusively for Pokémon! <br><br> You can search your dream job, filtering by your type, location and level.<br><br>
+                If you wanna post a PKMN job offer, click on <a href="#" id="add-job-hero" class="add-job-link"> Add a JOB. </a>
+            </div> 
+        </div>
+    </section>
+    <!-- job search banner -->
+    <section>
+        <div></div>
+    </section>
+
+
+
+
+<div class="bg-blue-900 h-72"></div>
+<div class="bg-blue-900 h-72"></div>
+<div class="bg-blue-900 h-72"></div>
+<div class="bg-blue-900 h-72"></div>
+
 </body>
 </html>

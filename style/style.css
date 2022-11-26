@@ -7,12 +7,57 @@
 @font-face { font-family: julietta; src: url(../assets/fonts/julietta-messie.otf);
 }
 
+body { font-family: 'Poppins', sans-serif; }
+
 nav { font-family: retroPoke; }
 
 .sprite { font-family: sprites; }
 
-.hero-text { font-family: retroPoke; }
-
 .hero-text { font-family: 'Poppins', sans-serif; }
 
 .free { font-family: julietta ; font-size: 3.5rem; color: white; }
+
+/* #free-glow { 
+    -webkit-animation: glow 2s ease-in-out infinite alternate;
+    -moz-animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 30px rgb(254, 255, 220), 0 0 40px rgb(255, 246, 176), 0 0 50px rgb(255, 243, 109), 0 0 60px rgb(255, 214, 118), 0 0 70px rgb(255, 235, 120);
+    }
+    to {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgb(255, 250, 201), 0 0 40px rgb(255, 253, 149), 0 0 50px rgb(255, 245, 106), 0 0 60px rgb(252, 223, 40);   
+  }
+} */
+
+.fixed-img { margin: 0px; background-color: rgb(75, 196, 75); position: relative; }
+
+.fixed-img::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .4;
+    background-image: url(../assets/images/pokemon.png);
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.hero-welcome { position: relative; z-index: 2; font-size: 2.75rem; }
+
+.hero-welcome h2 {  text-shadow: 4px 1px 2px rgba(0,0,0,0.23); }
+
+@media(max-width: 768px) {
+    .free-hero { font-size: 2.5rem; }
+}
+
+#add-job-hero { color: #FDE047; }
+
+#add-job-hero:hover { color: #B22E1C; }
