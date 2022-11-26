@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/pattern.css" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
     <title>PokéJOBS</title>
 </head>
@@ -33,6 +34,7 @@
             </button>
         </div>
     </header>
+    <!-- dropdown mobile menu -->
     <div class="hidden md:hidden w-full mobile-menu bg-[#B22E1C]">
                 <a href="#"
                     class="block text-center text-sm px-2 py-4 text-white font-semibold hover:bg-white hover:text-black transition duration-200">
@@ -53,29 +55,83 @@
     </section>
     <section class="fixed-img flex justify-center md:w-full h-48">
         <div class="hero-welcome flex flex-col md:flex-row justify-center items-center">
-            <img src="assets/images/logo.png" class="w-56 md:w-72" alt="PokéJobs logo" aria-hidden="true"> <h2 class="free free-hero text-white"> is the site for you! </h2>
+            <img src="assets/images/logo.png" class="w-56 md:w-72" alt="PokéJobs logo" aria-hidden="true"> <h2 class="free text-white"> is the site for you! </h2>
         </div>
     </section>
     <section class="flex justify-center">
         <div class="flex bg-[#123269] min-w-fit min-h-fit items-center my-10 rounded font-semibold text-lg text-white text-center">
             <div class="p-3">
                 At PokéJOBS, both humans and Pokémon can share available jobs exclusively for Pokémon! <br><br> You can search your dream job, filtering by your type, location and level.<br><br>
-                If you wanna post a PKMN job offer, click on <a href="#" id="add-job-hero" class="add-job-link"> Add a JOB. </a>
+                If you wanna post a PKMN job offer, click on <a href="#" id="add-job-hero" class="add-job-link">Add a JOB.</a>
             </div> 
         </div>
     </section>
     <!-- job search banner -->
-    <section>
-        <div></div>
+    <section class="md:text-lg h-92 md:h-52 md:my-8">
+        <div class="search-banner bg-[#86198f] flex flex-col md:flex-row justify-around items-center h-92 md:h-32 min-h-fit">
+            <figure class="md:w-3/12">
+                <img src="assets/images/chikorita.png" class="h-48 md:h-52 lg:h-64" alt="Chikorita working" aria-hidden="true">
+            </figure>
+            <div class="flex flex-col md:flex-row justify-around items-center md:w-9/12 text-black">
+                <div class="flex md:flex-col items-center bg-yellow-300 rounded p-2">
+                    <label for="search-name" class="search-labels text-center">Job name</label>
+                    <input type="text" name="search-name" id="search-name" class="rounded mx-1 my-3" placeholder="PokéJOB name">
+                </div>
+                <div class="flex md:flex-col items-center bg-green-300 rounded p-2">
+                    <label for="search-location" class="search-labels text-center">Location</label>
+                    <select id="search-location" class="rounded mx-1 my-3">
+                        <option value="all">All</option>
+                        <option value="kanto">Kanto</option>
+                        <option value="johto">Johto</option>
+                        <option value="hoenn">Hoenn</option>
+                        <option value="sinnoh">Sinnoh</option>
+                    </select>
+                </div>
+                <div class="flex md:flex-col items-center bg-blue-300 rounded p-2">
+                    <label for="search-type" class="search-labels text-center">Type</label>
+                    <select id="search-type" class="rounded mx-1 my-3">
+                        <option value="all">All</option>
+                        <option value="bug">Bug</option>
+                        <option value="dark">Dark</option>
+                        <option value="dragon">Dragon</option>
+                        <option value="electric">Electric</option>
+                        <option value="fighting">Fighting</option>
+                        <option value="fire">Fire</option>
+                        <option value="flying">Flying</option>
+                        <option value="ghost">Ghost</option>
+                        <option value="grass">Grass</option>
+                        <option value="ground">Ground</option>
+                        <option value="ice">Ice</option>
+                        <option value="normal">Normal</option>
+                        <option value="poison">Poison</option>
+                        <option value="psychic">Psychic</option>
+                        <option value="rock">Rock</option>
+                        <option value="steel">Steel</option>
+                        <option value="water">Water</option>
+                    </select>
+                </div>
+                <div class="flex md:flex-col items-center bg-red-300 rounded p-2">
+                    <label for="search-level" class="search-labels text-center">Level</label> 
+                    <select id="search-level" class="rounded mx-1 my-3">
+                        <option value="all">All</option>
+                        <option value="less20">20 or less</option>
+                        <option value="21to40">21-40</option>
+                        <option value="41to60">41-60</option>
+                        <option value="61to80">61-80</option>
+                        <option value="more81">80 or more</option>
+                    </select>
+                </div> 
+            </div>
+        </div>
     </section>
 
+<div class="bg-blue-900 h-72"></div>
 
-
-
-<div class="bg-blue-900 h-72"></div>
-<div class="bg-blue-900 h-72"></div>
-<div class="bg-blue-900 h-72"></div>
-<div class="bg-blue-900 h-72"></div>
+    <!-- footer  -->
+    <footer class="flex flex-col h-32">
+        <span class="build-with">Build with &#128154; by <span class="made-jopay">JoPay</span></span> 
+        <small>©2022 Pokémon. ©1995 - 2022 Nintendo/Creatures Inc./GAME FREAK inc. TM,  ®Nintendo.</small>
+    </footer>
 
 </body>
 </html>

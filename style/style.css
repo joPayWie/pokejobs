@@ -7,30 +7,41 @@
 @font-face { font-family: julietta; src: url(../assets/fonts/julietta-messie.otf);
 }
 
+@font-face { font-family: remachine; src: url(../assets/fonts/RemachineScript_Personal_Use.ttf); }
+
+/* GENERAL STYLES*/
+
 body { font-family: 'Poppins', sans-serif; }
+
+*::-webkit-scrollbar{
+  width: 16px;
+}
+
+*::-webkit-scrollbar-thumb{
+  background-color:#86198F;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+*::-webkit-scrollbar-thumb:active{
+  background-color:#64007a;
+}
+
+*::-webkit-scrollbar-track{
+  background: white;
+}
+
+/* NAVBAR */
 
 nav { font-family: retroPoke; }
 
 .sprite { font-family: sprites; }
 
+/* HERO */
+
 .hero-text { font-family: 'Poppins', sans-serif; }
 
 .free { font-family: julietta ; font-size: 3.5rem; color: white; }
-
-/* #free-glow { 
-    -webkit-animation: glow 2s ease-in-out infinite alternate;
-    -moz-animation: glow 2s ease-in-out infinite alternate;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from {
-      text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 30px rgb(254, 255, 220), 0 0 40px rgb(255, 246, 176), 0 0 50px rgb(255, 243, 109), 0 0 60px rgb(255, 214, 118), 0 0 70px rgb(255, 235, 120);
-    }
-    to {
-      text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgb(255, 250, 201), 0 0 40px rgb(255, 253, 149), 0 0 50px rgb(255, 245, 106), 0 0 60px rgb(252, 223, 40);   
-  }
-} */
 
 .fixed-img { margin: 0px; background-color: rgb(75, 196, 75); position: relative; }
 
@@ -43,7 +54,7 @@ nav { font-family: retroPoke; }
     width: 100%;
     height: 100%;
     opacity: .4;
-    background-image: url(../assets/images/pokemon.png);
+    background-image: url(../assets/images/pokemon2.png);
     background-repeat: no-repeat;
     background-position-y: center;
     background-attachment: fixed;
@@ -61,3 +72,13 @@ nav { font-family: retroPoke; }
 #add-job-hero { color: #FDE047; }
 
 #add-job-hero:hover { color: #B22E1C; }
+
+/* SEARCH BANNER */ 
+
+.search-labels { font-family: retroPoke; }
+
+
+/* FOOTER */
+.build-with { font-family: 'Poppins', sans-serif; color: white; font-size: 1rem; margin-right: 1vw; margin-bottom: 0; align-self: flex-end; }
+
+.made-jopay { color: #E94560; font-family: remachine; font-weight: 100; font-size: 30px; }
