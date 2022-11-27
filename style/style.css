@@ -18,13 +18,13 @@ body { font-family: 'Poppins', sans-serif; }
 }
 
 *::-webkit-scrollbar-thumb{
-  background-color:#86198F;
+  background-color:#005E5C;
   border-radius: 10px;
   border: 2px solid white;
 }
 
 *::-webkit-scrollbar-thumb:active{
-  background-color:#64007a;
+  background-color:#004746;
 }
 
 *::-webkit-scrollbar-track{
@@ -32,6 +32,8 @@ body { font-family: 'Poppins', sans-serif; }
 }
 
 /* NAVBAR */
+
+.yellow-header { box-shadow: rgba(66, 40, 0, .3) 4px 4px 0 0; }
 
 nav { font-family: retroPoke; }
 
@@ -69,9 +71,15 @@ nav { font-family: retroPoke; }
     .free-hero { font-size: 2.75rem; }
 }
 
-#add-job-hero { color: #FDE047; }
+@media(max-width: 1024px) and (orientation: landscape) {
+  .chikorita { display: none; }
+}
 
-#add-job-hero:hover { color: #B22E1C; }
+@media(max-width: 1180px) and (orientation: landscape) {
+  .search-params { margin: 0 2px; }
+  .chikorita { height: 13rem !important; } 
+}
+
 
 /* SEARCH BANNER */ 
 
@@ -79,6 +87,35 @@ nav { font-family: retroPoke; }
 
 .search-button::before { content: '<i class="fa-solid fa-magnifying-glass"></i>'; }
 
+.banner-btns {
+  background-color: #fbeee0;
+  border: 2px solid #000000;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.banner-btns:hover { background-color: #fff; }
+
+.banner-btns:active { box-shadow: #422800 2px 2px 0 0; transform: translate(2px, 2px); }
+
+@media (min-width: 768px) {
+  .banner-btns {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+/* MODAL ADD A JOB */
+.container-modal { z-index: 3; }
 
 /* FOOTER */
 .footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
@@ -98,29 +135,3 @@ nav { font-family: retroPoke; }
   }
 }
 
-.button-74 {
-  background-color: #fbeee0;
-  border: 2px solid #000000;
-  border-radius: 30px;
-  box-shadow: #422800 4px 4px 0 0;
-  color: #000000;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-74:hover { background-color: #fff; }
-
-.button-74:active { box-shadow: #422800 2px 2px 0 0; transform: translate(2px, 2px); }
-
-@media (min-width: 768px) {
-  .button-74 {
-    min-width: 120px;
-    padding: 0 25px;
-  }
-}
