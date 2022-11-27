@@ -62,9 +62,13 @@ nav { font-family: retroPoke; }
     opacity: .4;
     background-image: url(../assets/images/pokemon2.png);
     background-repeat: no-repeat;
-    background-position-y: center;
+    background-position-y: bottom;
     background-attachment: fixed;
     background-size: cover;
+}
+
+@media(max-width: 768px) {
+  .fixed-img::before { background-size: auto; }
 }
 
 .pattern { position: absolute; z-index: -3; color:rgba(230, 214, 0, 0.31); }
