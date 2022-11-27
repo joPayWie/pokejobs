@@ -31,8 +31,20 @@ const showRandomPkmn = () => {
 
 showRandomPkmn()
 
+// Modal
 for (const btn of $$(".add-job-link")) { 
     btn.addEventListener("click", () => {
         $("#container-modal").classList.remove("hidden")
     })
 }
+
+$("#modal-btn-cancel").addEventListener("click", () => {
+    $("#container-modal").classList.add("hidden")
+})
+
+// Burger menu
+$(".mobile-menu-button").addEventListener("click", () => {
+    $(".mobile-menu").classList.toggle("hidden");
+    $("#burger-icon-lines").classList.toggle("hidden")
+    $("#burger-icon-xmark").classList.toggle("hidden")
+})
