@@ -2,10 +2,11 @@
 
 @font-face { font-family: retroPoke; src: url(../assets/fonts/pokemonClassic.ttf); }
 
-@font-face { font-family: sprites; src: url(../assets/fonts/pokpix.ttf); }
+@font-face { font-family: sprites1; src: url(../assets/fonts/pokpix.ttf); }
 
-@font-face { font-family: julietta; src: url(../assets/fonts/julietta-messie.otf);
-}
+@font-face { font-family: sprites2; src: url(../assets/fonts/poxpix2.ttf); }
+
+@font-face { font-family: julietta; src: url(../assets/fonts/messie.otf); }
 
 @font-face { font-family: remachine; src: url(../assets/fonts/RemachineScript_Personal_Use.ttf); }
 
@@ -37,7 +38,10 @@ body { font-family: 'Poppins', sans-serif; }
 
 nav { font-family: retroPoke; }
 
-.sprite { font-family: sprites; }
+#sprite1 { font-family: sprites1; }
+
+#sprite2 { font-family: sprites2; }
+
 
 /* HERO */
 
@@ -62,6 +66,8 @@ nav { font-family: retroPoke; }
     background-attachment: fixed;
     background-size: cover;
 }
+
+.pattern { position: absolute; z-index: -3; color:rgba(230, 214, 0, 0.31); }
 
 .hero-welcome { position: relative; z-index: 2; font-size: 2.75rem; }
 
@@ -115,7 +121,7 @@ nav { font-family: retroPoke; }
 }
 
 /* MODAL ADD A JOB */
-.container-modal { z-index: 3; }
+#container-modal { z-index: 3; }
 
 /* FOOTER */
 .footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
