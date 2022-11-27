@@ -66,7 +66,7 @@ nav { font-family: retroPoke; }
 .hero-welcome h2 {  text-shadow: 4px 1px 2px rgba(0,0,0,0.23); }
 
 @media(max-width: 768px) {
-    .free-hero { font-size: 2.5rem; }
+    .free-hero { font-size: 2.75rem; }
 }
 
 #add-job-hero { color: #FDE047; }
@@ -77,8 +77,50 @@ nav { font-family: retroPoke; }
 
 .search-labels { font-family: retroPoke; }
 
+.search-button::before { content: '<i class="fa-solid fa-magnifying-glass"></i>'; }
+
 
 /* FOOTER */
-.build-with { font-family: 'Poppins', sans-serif; color: white; font-size: 1rem; margin-right: 1vw; margin-bottom: 0; align-self: flex-end; }
+.footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
 
-.made-jopay { color: #E94560; font-family: remachine; font-weight: 100; font-size: 30px; }
+.footer-icons:hover { color: rgb(30 58 138); background: rgb(253 224 71); border: rgb(30 58 138) 1px solid ;}
+
+.build-with { font-family: 'Poppins', sans-serif; color: white; font-size: .8rem; margin-right: 1vw; margin-bottom: 0; align-self: flex-end; }
+
+.made-jopay { color: #E94560; font-family: remachine; font-weight: 100; font-size: 1.5rem; }
+
+@media(max-width: 768px) {
+  footer {
+    margin-top: 1rem;
+  }
+  .copyright  {
+    padding: .75rem;
+  }
+}
+
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #000000;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover { background-color: #fff; }
+
+.button-74:active { box-shadow: #422800 2px 2px 0 0; transform: translate(2px, 2px); }
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
