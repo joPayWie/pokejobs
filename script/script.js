@@ -27,6 +27,8 @@ const getRandomChar = (pokeArray) => {
 const showRandomPkmn = () => {
     $("#sprite1").innerHTML = `${getRandomChar(pokeLetters)}`
     $("#sprite2").innerHTML = `${getRandomChar(pokeLetters)}`
+    $("#sprite3").innerHTML = `${getRandomChar(pokeLetters)}`
+    $("#sprite4").innerHTML = `${getRandomChar(pokeLetters)}`
 }
 
 showRandomPkmn()
@@ -44,6 +46,7 @@ $("#modal-btn-cancel").addEventListener("click", () => {
 
 // Burger menu
 $(".mobile-menu-button").addEventListener("click", () => {
+    showRandomPkmn()
     $(".mobile-menu").classList.toggle("hidden");
     $("#burger-icon-lines").classList.toggle("hidden")
     $("#burger-icon-xmark").classList.toggle("hidden")
