@@ -40,12 +40,14 @@
                                 <option value="johto">Johto</option>
                                 <option value="hoenn">Hoenn</option>
                                 <option value="sinnoh">Sinnoh</option>
+                                <option value="unova">Unova</option>
                             </select>
                         </div>
                     </aside>
                     <aside class="w-full md:w-1/2 md:ml-5">
                         <div class="flex flex-col">
                             <h3 class="font-bold mt-2">PKMN Type</h3>
+                            <p class="text-[#035A9A]">You can choose up to 3 types</p>
                             <div class="flex justify-between">
                                 <div class="flex flex-col items-start">
                                     <div class="flex w-full justify-between">
@@ -152,7 +154,7 @@
         <img src="assets/images/logo.png" class="h-full" alt="PokéJobs logo" aria-hidden="true">
         <nav class="mx-4 hidden md:flex md:flex-row md:justify-between md:text-lg">
             <a href="#search-jobs" class="mx-6 hover:text-[#B22E1C]"> <span class="mx-2" id="sprite1"> m </span>Home</a> 
-            <a href="#" class="add-job-link mx-6 hover:text-[#B22E1C]"> <span class="mx-2" id="sprite2"> n </span>Add a JOB</a> 
+            <button class="add-job-link mx-6 hover:text-[#B22E1C]"> <span class="mx-2" id="sprite2"> n </span>Add a JOB</button> 
         </nav>
 <!-- header burger menu -->
         <div class="md:hidden flex items-center">
@@ -167,13 +169,13 @@
     </header>
 <!-- dropdown mobile menu -->
     <div class="hidden md:hidden w-full mobile-menu bg-[#B22E1C]">
-                <a href="#" class="block text-center text-sm px-2 py-4 text-white font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite3"> m </span>Home </a>
-                <a href="#" class="add-job-link block text-center tag-show-link text-sm px-2 py-4 text-white  font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite4"> n </span>Add a JOB</a>
+                <a href="index.html" class="block text-center text-sm px-2 py-4 text-white font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite3">m</span>Home</a>
+                <a href="#" class="add-job-link block text-center tag-show-link text-sm px-2 py-4 text-white  font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite4">n</span>Add a JOB</a>
     </div>
     
 <!-- hero  -->
     <section class="flex justify-center py-6 w-full">
-        <div class="hero-text flex flex-col w-full md:w-8/12 text-yellow-300 text-lg md:text-2xl text-center md:text-start items-center p-4">
+        <div class="hero-text flex flex-col w-full md:w-8/12 text-yellow-300 text-lg md:text-2xl text-center md:text-start items-center p-5">
             <h2 class="my-2 md:self-start">Tired of battling all day at your trainer's request?</h2>
             <h2 class="my-2 md:self-end">Bored of always being inside your <img src="assets/images/pokeball.png" class="w-7 inline" alt="pokéball" aria-hidden="true"> ?</h2>
             <h2 class="my-2 md:self-center">It's time to set yourself <span class="free">free </span>!</h2>
@@ -217,6 +219,7 @@
                             <option value="johto">Johto</option>
                             <option value="hoenn">Hoenn</option>
                             <option value="sinnoh">Sinnoh</option>
+                            <option value="unova">Unova</option>
                         </select>
                     </div>
                     <div class="search-params flex md:flex-col items-center bg-[#36A95E] rounded p-2 lg:mx-10 md:mx-2 my-2">
@@ -261,8 +264,8 @@
             </form>
         </div>
     </section>
-    <section class="flex justify-center py-12 md:py-3">
-        <div class="flex bg-[#123269] pattern-cross-dots-md text-[#035A9A] w-11/12 min-h-fit items-center rounded h-48"></div>
+    <section class="flex justify-center py-12 md:py-3 min-h-fit">
+        <div id="job-container" class="flex flex-col md:flex-row flex-wrap bg-[#123269] pattern-cross-dots-md text-[#035A9A] w-11/12 min-h-min justify-center items-start rounded h-auto p-4"></div>
     </section>
 
 <!-- footer  -->
