@@ -131,6 +131,12 @@ nav { font-family: retroPoke; }
 /* MODAL ADD A JOB */
 #container-modal { z-index: 3; }
 
+@media(max-width: 350px) {
+  .window-modal {
+    overflow-y: auto;
+  }
+}
+
 /* FOOTER */
 .footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
 
