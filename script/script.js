@@ -30,15 +30,15 @@ API fetching
 ----------------------------------------------------------------------------
 */
 // get pokejobs
-const getPokeJobs = async () => {
-    const response = await fetch("https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs")
+const getPokeJobs = async (jobId = '') => {
+    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`)
     const jobs = await response.json()
     return jobs
 }
 
 getPokeJobs().then(data => renderPokeJobs(data))
 
-const searchPkJob = (pkJobsArray, elementId) => pkJobsArray.find(({ id }) => id === elementId)
+
 
 // post pokejob
 const createNewJob = () => {
@@ -67,43 +67,7 @@ const postPokeJob = async () => {
 DOM
 ----------------------------------------------------------------------------
 */
-
-// Show pokéjobs
-const renderPokeJobs = (pokeJobs) => {
-    for (const { id, name, description, location, pkType, level } of pokeJobs) {
-        $("#job-container").innerHTML += ` 
-        <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
-            <h2 class="font-semibold text-lg">${name}</h2>
-            <div class="flex">
-                <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
-                <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
-                <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
-            </div>
-            <p><strong>Description: </strong>${description}</p>
-            <span><strong>Location: </strong>${location}</span><br>
-            <span><strong>Level required: </strong>${level}</span><br>
-            <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" onclick="showDetails(${id})" job-id="${id}">Details</button>
-        </div>
-        `
-    }
-}
-
-// const findJob = () => {
-
-// }
-
-const showDetails = (id) => {
-    renderSelectedPkJob(getPokeJobs().then(data => searchPkJob(data, id)))
-} // this doesn't work
-
-// for (const btn of $$(".details-btn")) {
-//     btn.addEventListener("click", () => {
-//         console.log("tuvieja")
-//         let jobId = btn.getAttribute("job-id")
-//         getPokeJobs().then(data => searchPkJob(data, jobId))
-//     })
-// }  THIS DOESN'T WORK EITHER WHY??
-
+// Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
     const { id, name, pkType, description, location, level, email } = pkJob
     $("#job-container").innerHTML = ``
@@ -122,6 +86,32 @@ const renderSelectedPkJob = (pkJob) => {
         <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Delete</button>
     </div>
     `
+}
+
+// Show pokéjobs
+const renderPokeJobs = (pokeJobs) => {
+    for (const { id, name, description, location, pkType, level } of pokeJobs) {
+        $("#job-container").innerHTML += ` 
+        <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
+            <h2 class="font-semibold text-lg">${name}</h2>
+            <div class="flex">
+                <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
+                <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
+                <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+            </div>
+            <p><strong>Description: </strong>${description}</p>
+            <span><strong>Location: </strong>${location}</span><br>
+            <span><strong>Level required: </strong>${level}</span><br>
+            <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
+        </div>
+        `
+        for (const btn of $$(".details-btn")) {
+            btn.addEventListener("click", () => {
+                let jobId = btn.getAttribute("job-id")
+                getPokeJobs(jobId).then(data => renderSelectedPkJob(data))
+            })
+        } 
+    }
 }
 
 // Pkmn sprites in menu
