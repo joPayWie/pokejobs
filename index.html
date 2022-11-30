@@ -1,12 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-tuch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/pattern.css" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script/script.js" defer></script>
     <title>PokéJOBS</title>
 </head>
-<body>
+<body class="w-full max-w-full bg-blue-900 overflow-x-hidden">
+        <!-- modal "add a job" -->
+        <section id="container-modal" class="hidden fixed bg-[rgba(0,0,0,0.2)] w-full h-full overflow-auto flex justify-center items-center">
+            <div class="bg-white min-h-fit w-full md:w-1/2 rounded-md mt-16 md:m-5 p-4 md:p-8 shadow-md">
+                <h2 class="text-3xl text-stone-800 font-bold">Add a PokéJOB</h2>
+                <form class="flex flex-col md:flex-row justify-around">
+                    <aside class="w-full md:w-1/2 mr-5">
+                        <div class="flex flex-col">
+                            <label for="addjob-name" class="font-bold mt-2">Name</label>
+                            <input name="addjob-name" id="addjob-name" class="border-2" type="text" maxlength="16" placeholder="Job name">
+                        </div>
+                        <span class="modal-error-name hidden text-red-600 text-xs ">Oops! Please enter a name to continue</span>
+                        <div class="flex flex-col">
+                            <label for="addjob-description" class="font-bold mt-2"> Description </label>
+                            <textarea rows="5" cols="15" id="addjob-description" class="border-2" placeholder="Job description" required></textarea>
+                        </div>
+                        <span class="modal-error-description hidden text-red-600 text-xs">Oops! Please enter a description to continue</span>
+                        <div class="flex flex-col">
+                            <label for="addjob-location" class="font-bold mt-2">Location</label>
+                            <select name="addjob-location" id="addjob-location" class="border-2">
+                                <option value="kanto">Kanto</option>
+                                <option value="johto">Johto</option>
+                                <option value="hoenn">Hoenn</option>
+                                <option value="sinnoh">Sinnoh</option>
+                                <option value="unova">Unova</option>
+                            </select>
+                        </div>
+                    </aside>
+                    <aside class="w-full md:w-1/2 md:ml-5">
+                        <div class="flex flex-col">
+                            <h3 class="font-bold mt-2">PKMN Type</h3>
+                            <p class="text-[#035A9A]">You can choose up to 3 types</p>
+                            <div class="flex justify-between">
+                                <div class="flex flex-col items-start">
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-bug">Bug</label>
+                                        <input type="checkbox" name="type-bug" id="type-bug" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-dark">Dark</label>
+                                        <input type="checkbox" name="type-dark" id="type-dark" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-dragon">Dragon</label>
+                                        <input type="checkbox" name="type-dragon" id="type-dragon" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-electric">Electric</label>
+                                        <input type="checkbox" name="type-electric" id="type-electric" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-fairy">Fairy</label>
+                                        <input type="checkbox" name="type-fairy" id="type-fairy" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-fighting">Fighting</label>
+                                        <input type="checkbox" name="type-fighting" id="type-fighting" class="pk-type mx-2">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-start">
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-fire">Fire</label>
+                                        <input type="checkbox" name="type-fire" id="type-fire" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-flying">Flying</label>
+                                        <input type="checkbox" name="type-flying" id="type-flying" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-ghost">Ghost</label>
+                                        <input type="checkbox" name="type-ghost" id="type-ghost" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-grass">Grass</label>
+                                        <input type="checkbox" name="type-grass" id="type-grass" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-ground">Ground</label>
+                                        <input type="checkbox" name="type-ground" id="type-ground" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-ice">Ice</label>
+                                        <input type="checkbox" name="type-ice" id="type-ice" class="pk-type mx-2">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-start">
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-normal">Normal</label>
+                                        <input type="checkbox" name="type-normal" id="type-normal" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-poison">Poison</label>
+                                        <input type="checkbox" name="type-poison" id="type-poison" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-psychic">Psychic</label>
+                                        <input type="checkbox" name="type-psychic" id="type-psychic" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-rock">Rock</label>
+                                        <input type="checkbox" name="type-rock" id="type-rock" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-steel">Steel</label>
+                                        <input type="checkbox" name="type-steel" id="type-steel" class="pk-type mx-2">
+                                    </div>
+                                    <div class="flex w-full justify-between">
+                                        <label for="type-water">Water</label>
+                                        <input type="checkbox" name="type-water" id="type-water" class="pk-type mx-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="addjob-level" class="font-bold mt-2">Level</label>
+                            <input type="number" name="addjob-level" id="addjob-level" class="border-2" placeholder="Minimum level required">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="addjob-email" class="font-bold mt-2">Contact email</label>
+                            <input type="email" name="addjob-email" id="addjob-email" placeholder="email@email.com" class="border-2">
+                        </div>
+                    </aside>
+                </form>
+                <div class="mt-5 flex justify-end">
+                    <button id="modal-btn-add"
+                        class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in">
+                        Add </button>
+                    <button id="modal-btn-cancel"
+                        class="self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">
+                        Cancel </button>
+                </div>
+            </div>
+        </section>
+<!-- navbar -->
+    <header class="yellow-header h-20 bg-yellow-300 px-6 flex justify-between items-center">
+        <img src="assets/images/logo.png" class="h-full" alt="PokéJobs logo" aria-hidden="true">
+        <nav class="mx-4 hidden md:flex md:flex-row md:justify-between md:text-lg">
+            <a href="#search-jobs" class="mx-6 hover:text-[#B22E1C]"> <span class="mx-2" id="sprite1"> m </span>Home</a> 
+            <button class="add-job-link mx-6 hover:text-[#B22E1C]"> <span class="mx-2" id="sprite2"> n </span>Add a JOB</button> 
+        </nav>
+<!-- header burger menu -->
+        <div class="md:hidden flex items-center">
+            <button class="outline-none mobile-menu-button">
+                <div class="bg-[#B22E1C] flex justify-center rounded  py-2 pl-3 pr-0">
+                    <i id="burger-icon-lines" class="fa-solid fa-bars text-4xl mr-3 "></i>
+                    <i id="burger-icon-xmark"
+                        class="hidden fa-solid fa-xmark text-4xl pl-1 pr-4"></i>
+                </div>
+            </button>
+        </div>
+    </header>
+<!-- dropdown mobile menu -->
+    <div class="hidden md:hidden w-full mobile-menu bg-[#B22E1C]">
+                <a href="index.html" class="block text-center text-sm px-2 py-4 text-white font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite3">m</span>Home</a>
+                <a href="#" class="add-job-link block text-center tag-show-link text-sm px-2 py-4 text-white  font-semibold hover:bg-white hover:text-black transition duration-200"><span class="mx-2" id="sprite4">n</span>Add a JOB</a>
+    </div>
     
+<!-- hero  -->
+    <section class="flex justify-center py-6 w-full">
+        <div class="hero-text flex flex-col w-full md:w-8/12 text-yellow-300 text-lg md:text-2xl text-center md:text-start items-center p-5">
+            <h2 class="my-2 md:self-start">Tired of battling all day at your trainer's request?</h2>
+            <h2 class="my-2 md:self-end">Bored of always being inside your <img src="assets/images/pokeball.png" class="w-7 inline" alt="pokéball" aria-hidden="true"> ?</h2>
+            <h2 class="my-2 md:self-center">It's time to set yourself <span class="free">free </span>!</h2>
+        </div>
+    </section>
+    <section class="fixed-img flex justify-center md:w-full h-48">
+        <div class="hero-welcome flex flex-col md:flex-row justify-center items-center">
+            <img src="assets/images/logo.png" class="w-56 md:w-72" alt="PokéJobs logo" aria-hidden="true"> <h2 class="free free-hero text-white"> is the site for you! </h2>
+        </div>
+    </section>
+    <div class="pattern hidden lg:flex flex-col items-start w-full">
+        <div class="lg:w-32 h-32 pattern-diagonal-lines-sm"> </div>
+        <div class="lg:w-72 h-32 pattern-diagonal-lines-sm self-end"> </div>
+        <div class="lg:w-80 h-32 pattern-diagonal-lines-sm self-center"> </div>
+    </div>
+    <section class="flex justify-center">
+        <div class="flex bg-[#123269] min-w-fit min-h-fit items-center my-10 rounded font-semibold text-lg text-white text-center">
+            <div class="p-3">
+                At PokéJOBS, both humans and Pokémon can share available jobs exclusively for Pokémon! <br><br> You can <a href="#search-jobs" class="text-[#ED6764] hover:text-[#B22E1C]">search</a> your dream job, filtering by your type, location and level.<br><br>
+                If you wanna post a PKMN job offer, click on <span class="add-job-link text-[#FDE047] hover:text-[#B22E1C] cursor-pointer">Add a JOB.</span>
+            </div> 
+        </div>
+    </section>
+<!-- job search banner -->
+    <section id="search-jobs" class="md:text-lg h-92 lg:h-52 md:my-8">
+        <div class="bg-[#005E5C] flex flex-col lg:flex-row justify-around items-center h-92 lg:h-48 min-h-fit py-5">
+            <figure class="md:w-3/12">
+                <img src="assets/images/chikorita.png" class="chikorita h-48 md:h-52 lg:h-64" alt="Chikorita working" aria-hidden="true">
+            </figure>
+            <form class="flex flex-col items-center">
+                <div class="flex flex-col md:flex-row items-center justify-center w-10/12 md:w-9/12 text-black">
+                    <div class="search-params flex flex-col items-center bg-[#36A95E] rounded p-2 lg:mx-10 md:mx-2 my-2">
+                        <label for="search-name" class="search-labels text-center">Job name</label>
+                        <input type="text" name="search-name" id="search-name" class="rounded mx-1 my-3" placeholder="PokéJOB name">
+                    </div>
+                    <div class="search-params flex md:flex-col items-center bg-[#36A95E] rounded p-2 lg:mx-10 md:mx-2 my-2">
+                        <label for="search-location" class="search-labels text-center">Location</label>
+                        <select id="search-location" class="rounded mx-1 my-3">
+                            <option value="all">All</option>
+                            <option value="kanto">Kanto</option>
+                            <option value="johto">Johto</option>
+                            <option value="hoenn">Hoenn</option>
+                            <option value="sinnoh">Sinnoh</option>
+                            <option value="unova">Unova</option>
+                        </select>
+                    </div>
+                    <div class="search-params flex md:flex-col items-center bg-[#36A95E] rounded p-2 lg:mx-10 md:mx-2 my-2">
+                        <label for="search-type" class="search-labels text-center">Type</label>
+                        <select id="search-type" class="rounded mx-1 my-3">
+                            <option value="all">All</option>
+                            <option value="bug">Bug</option>
+                            <option value="dark">Dark</option>
+                            <option value="dragon">Dragon</option>
+                            <option value="electric">Electric</option>
+                            <option value="fighting">Fighting</option>
+                            <option value="fire">Fire</option>
+                            <option value="flying">Flying</option>
+                            <option value="ghost">Ghost</option>
+                            <option value="grass">Grass</option>
+                            <option value="ground">Ground</option>
+                            <option value="ice">Ice</option>
+                            <option value="normal">Normal</option>
+                            <option value="poison">Poison</option>
+                            <option value="psychic">Psychic</option>
+                            <option value="rock">Rock</option>
+                            <option value="steel">Steel</option>
+                            <option value="water">Water</option>
+                        </select>
+                    </div>
+                    <div class="search-params flex md:flex-col items-center bg-[#36A95E] rounded p-2 lg:mx-10 md:mx-2 my-2">
+                        <label for="search-level" class="search-labels text-center">Level</label> 
+                        <select id="search-level" class="rounded mx-1 my-3">
+                            <option value="all">All</option>
+                            <option value="less20">20 or less</option>
+                            <option value="21to40">21-40</option>
+                            <option value="41to60">41-60</option>
+                            <option value="61to80">61-80</option>
+                            <option value="more81">80 or more</option>
+                        </select>
+                    </div> 
+                </div>
+                <div class="buttons flex justify-center mt-3 text-xl font-semibold">
+                    <input  id="search-button" type="submit" value="&#xf002" class="banner-btns fa-solid fa-magnifying-glass bg-[#FEDF63] py-2 px-12 mx-2 rounded cursor-pointer"aria-hidden="true" aria-label="Search">
+                    <button id="clear-button" class="banner-btns bg-[#ED6764] py-2 px-9 rounded mx-2">Clear</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section class="flex justify-center py-12 md:py-3 min-h-fit">
+        <div id="job-container" class="flex flex-col md:flex-row flex-wrap bg-[#123269] pattern-cross-dots-md text-[#035A9A] w-11/12 min-h-min justify-center items-start rounded h-auto p-4"></div>
+    </section>
+
+<!-- footer  -->
+    <footer class="flex flex-col h-32 md:h-24 items-center justify-end mt-5">
+        <div class="text-yellow-300 text-lg md:text-2xl">
+            <a href="#"><i class="footer-icons devicon-twitter-original mx-3 py-3 px-2.5"></i></a>
+            <a href="#"><i class="footer-icons devicon-facebook-plain mx-3 p-3"></i></a>
+            <a href="#"><i class="footer-icons fa-brands fa-instagram mx-3 text-xl md:text-3xl px-3 py-1.5"></i></a>
+        </div>
+        <div class="copyright self-end">
+            <span class="build-with">Build with &#128154; by <span class="made-jopay">JoPay</span></span> 
+            <small>©2022 Pokémon. ©1995 - 2022 Nintendo/Creatures Inc./GAME FREAK inc. TM, ®Nintendo.</small>
+        </div>
+    </footer>
 </body>
 </html>

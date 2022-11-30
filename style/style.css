@@ -1,0 +1,151 @@
+/* FONTS */
+
+@font-face { font-family: retroPoke; src: url(../assets/fonts/pokemonClassic.ttf); }
+
+@font-face { font-family: sprites1; src: url(../assets/fonts/pokpix.ttf); }
+
+@font-face { font-family: sprites2; src: url(../assets/fonts/poxpix2.ttf); }
+
+@font-face { font-family: julietta; src: url(../assets/fonts/messie.otf); }
+
+@font-face { font-family: remachine; src: url(../assets/fonts/RemachineScript_Personal_Use.ttf); }
+
+/* GENERAL STYLES*/
+
+body { font-family: 'Poppins', sans-serif; }
+
+*::-webkit-scrollbar{
+  width: 16px;
+}
+
+*::-webkit-scrollbar-thumb{
+  background-color:#005E5C;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+*::-webkit-scrollbar-thumb:active{
+  background-color:#004746;
+}
+
+*::-webkit-scrollbar-track{
+  background: white;
+}
+
+/* NAVBAR */
+
+.yellow-header { box-shadow: rgba(66, 40, 0, .3) 4px 4px 0 0; }
+
+nav { font-family: retroPoke; }
+
+#sprite1 { font-family: sprites1; }
+
+#sprite2 { font-family: sprites2; }
+
+#sprite3 { font-family: sprites1; }
+
+#sprite4 { font-family: sprites2; }
+
+
+/* HERO */
+
+.hero-text { font-family: 'Poppins', sans-serif; }
+
+.free { font-family: julietta ; font-size: 3.5rem; color: white; }
+
+.fixed-img { margin: 0px; background-color: rgb(75, 196, 75); position: relative; }
+
+.fixed-img::before{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .4;
+    background-image: url(../assets/images/pokemon2.png);
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+@media(max-width: 768px) {
+  .fixed-img::before { background-size: auto; }
+}
+
+.pattern { position: absolute; z-index: -3; color:rgba(230, 214, 0, 0.31); }
+
+.hero-welcome { position: relative; z-index: 2; font-size: 2.75rem; }
+
+.hero-welcome h2 {  text-shadow: 4px 1px 2px rgba(0,0,0,0.23); }
+
+@media(max-width: 768px) {
+    .free-hero { font-size: 2.75rem; }
+}
+
+@media(max-width: 1024px) and (orientation: landscape) {
+  .chikorita { display: none; }
+}
+
+@media(max-width: 1180px) and (orientation: landscape) {
+  .search-params { margin: 0 2px; }
+  .chikorita { height: 13rem !important; } 
+}
+
+
+/* SEARCH BANNER */ 
+
+.search-labels { font-family: retroPoke; }
+
+.search-button::before { content: '<i class="fa-solid fa-magnifying-glass"></i>'; }
+
+.banner-btns {
+  background-color: #fbeee0;
+  border: 2px solid #000000;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.banner-btns:hover { background-color: #fff; }
+
+.banner-btns:active { box-shadow: #422800 2px 2px 0 0; transform: translate(2px, 2px); }
+
+@media (min-width: 768px) {
+  .banner-btns {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+/* MODAL ADD A JOB */
+#container-modal { z-index: 3; }
+
+/* FOOTER */
+.footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
+
+.footer-icons:hover { color: rgb(30 58 138); background: rgb(253 224 71); border: rgb(30 58 138) 1px solid ;}
+
+.build-with { font-family: 'Poppins', sans-serif; color: white; font-size: .8rem; margin-right: 1vw; margin-bottom: 0; align-self: flex-end; }
+
+.made-jopay { color: #E94560; font-family: remachine; font-weight: 100; font-size: 1.5rem; }
+
+@media(max-width: 768px) {
+  footer {
+    margin-top: 1rem;
+  }
+  .copyright  {
+    padding: .75rem;
+  }
+}
+
