@@ -36,15 +36,14 @@ body { font-family: 'Poppins', sans-serif; }
 
 .yellow-header { box-shadow: rgba(66, 40, 0, .3) 4px 4px 0 0; }
 
-nav { font-family: retroPoke; }
+.retro-font { font-family: retroPoke; }
 
-#sprite1 { font-family: sprites1; }
+#sprite1, #sprite3 { font-family: sprites1; }
 
-#sprite2 { font-family: sprites2; }
+#sprite2, #sprite4 { font-family: sprites2; }
 
-#sprite3 { font-family: sprites1; }
 
-#sprite4 { font-family: sprites2; }
+/* #sprite4 { font-family: sprites2; } */
 
 
 /* HERO */
@@ -96,8 +95,6 @@ nav { font-family: retroPoke; }
 
 
 /* SEARCH BANNER */ 
-
-.search-labels { font-family: retroPoke; }
 
 .search-button::before { content: '<i class="fa-solid fa-magnifying-glass"></i>'; }
 
