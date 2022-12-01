@@ -25,17 +25,15 @@
                     <aside class="w-full md:w-1/2 mr-5">
                         <div class="flex flex-col">
                             <label for="addjob-name" class="font-bold mt-2">Name</label>
-                            <input name="addjob-name" id="addjob-name" class="border-2" type="text" maxlength="16" placeholder="Job name">
-                            <span class="modal-error-name hidden text-red-600 text-xs ">Oops! Please enter a name to continue</span>
+                            <input name="addjob-name" id="addjob-name" class="border-2" type="text" maxlength="16" placeholder="Job name" required>
                         </div>
                         <div class="flex flex-col">
                             <label for="addjob-description" class="font-bold mt-2"> Description </label>
                             <textarea rows="5" cols="15" id="addjob-description" class="border-2" placeholder="Job description" required></textarea>
-                            <span class="modal-error-description hidden text-red-600 text-xs">Oops! Please enter a description to continue</span>
                         </div>
                         <div class="flex flex-col">
                             <label for="addjob-location" class="font-bold mt-2">Location</label>
-                            <select name="addjob-location" id="addjob-location" class="border-2">
+                            <select name="addjob-location" id="addjob-location" class="border-2" required>
                                 <option value="kanto">Kanto</option>
                                 <option value="johto">Johto</option>
                                 <option value="hoenn">Hoenn</option>
@@ -45,8 +43,7 @@
                         </div>
                         <div class="flex flex-col">
                             <label for="addjob-email" class="font-bold mt-2">Contact email</label>
-                            <input type="email" name="addjob-email" id="addjob-email" placeholder="email@email.com" class="border-2">
-                            <span class="modal-error-email hidden text-red-600 text-xs">Oops! Please enter an email to continue</span>
+                            <input type="email" name="addjob-email" id="addjob-email" placeholder="email@email.com" class="border-2" required>
                         </div>
                     </aside>
                     <aside class="w-full md:w-1/2 md:ml-5">
@@ -136,19 +133,17 @@
                         </div>
                         <div class="flex flex-col">
                             <label for="addjob-level" class="font-bold mt-2">Level</label>
-                            <input type="number" name="addjob-level" id="addjob-level" class="border-2" placeholder="Minimum level required">
-                            <span class="modal-error-level hidden text-red-600 text-xs">Oops! Please enter the minimum level to continue</span>
+                            <input type="number" name="addjob-level" id="addjob-level" class="border-2" placeholder="Minimum level required" required>
+                        </div>
+                        <div class="mt-5 flex justify-end">
+                            <input type="submit" value="Add" id="modal-btn-add"
+                                class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in"> 
+                            <button id="modal-btn-cancel"
+                                class="self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">
+                                Cancel </button>
                         </div>
                     </aside>
                 </form>
-                <div class="mt-5 flex justify-end">
-                    <button id="modal-btn-add"
-                        class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in">
-                        Add </button>
-                    <button id="modal-btn-cancel"
-                        class="self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">
-                        Cancel </button>
-                </div>
             </div>
         </section>
 <!-- navbar -->

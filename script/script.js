@@ -8,10 +8,9 @@ const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
 const putInUpperCase = (location) => {  
-    let locationArr = location.split('')
-    locationArr[0].toUpperCase()
-    return locationArr.join('')
-}  // DOESN'T WORK YET
+    const locationUpper = location.charAt(0).toUpperCase() + location.slice(1)
+    return locationUpper
+} 
 
 const pkTypes = $$(".pk-type")
 
@@ -38,8 +37,6 @@ const getPokeJobs = async (jobId = '') => {
 
 getPokeJobs().then(data => renderPokeJobs(data))
 
-
-
 // post pokejob
 const createNewJob = () => {
     return {
@@ -62,17 +59,107 @@ const postPokeJob = async () => {
     }).finally(() => window.location.href = "index.html")
 }
 
+const deletePokeJob = async (jobId) => {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+        method: "DELETE"
+    }).finally(() => window.location.href = "index.html")
+}
+
+/* 
+----------------------------------------------------------------------------
+FILTERS
+----------------------------------------------------------------------------
+*/
+
+const filterBy = (pokeJobs, key, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+      return pokeJob[key] === value
+    })
+    return filterArr
+}
+
+getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+
+const searchLocationInput = $("#search-location")
+const searchTypeInput = $("#search-type")
+const searchLevelInput = $("#search-level")
+
+
+let cagate = [{
+    "name": "Fireman",
+    "description": "You will have to put out forest and home fires. Mandatory being water type.",
+    "location": "johto",
+    "pkType": ["water"],
+    "level": 50,
+    "id": "1",
+    "email": "firemen123@pkmn.com" 
+   },
+   {
+    "name": "Energy booster",
+    "description": "Your duty will be to provide energy to different establishments (hospitals, companies, etc.). Mandatory to be electric type.",
+    "location": "kanto",
+    "pkType": ["electric"],
+    "level": 20,
+    "id": "2",
+    "email": "energyplant@pkmn.com" 
+   },
+   {
+    "name": "Water transfers",
+    "description": "You will make transfers from one place to another through water, using a safety trailer. Part time job. Desirable water type.",
+    "location": "hoenn",
+    "pkType": ["water"],
+    "level": 60,
+    "id": "3",
+    "email": "acquatic-transfers@pkmn.com" 
+   },
+   {
+    "name": "Trash burning",
+    "description": "Garbage burning and ash management.",
+    "location": "johto",
+    "pkType": ["fire"],
+    "level": 35,
+    "id": "4",
+    "email": "goodbye-garbage@pkmn.com" 
+   }]
+
+const filterJobs = (data) => {
+    let arrayFiltered = data
+    if (searchLocationInput.value !== 'all') {
+        arrayFiltered = filterBy(arrayFiltered, 'location', searchLocationInput.value)
+    }
+    if (searchTypeInput.value !== 'all') {
+        arrayFiltered = filterBy(arrayFiltered, 'type', searchTypeInput.value)
+    }
+    if (searchLevelInput !== 'all') {
+        
+    }
+    return arrayFiltered
+}
+
+
 /* 
 ----------------------------------------------------------------------------
 DOM
 ----------------------------------------------------------------------------
 */
+
+const hideElement = (selector) => selector.classList.add("hidden")
+const unHideElement = (selector) => selector.classList.remove("hidden")
+
+const unhideDelete = () => {
+    unHideElement($("#are-u-sure"))
+}
+
+const hideDelete = () => {
+    hideElement($("#are-u-sure"))
+}
+
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
     const { id, name, pkType, description, location, level, email } = pkJob
     $("#job-container").innerHTML = ``
     $("#job-container").innerHTML = `
-    <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
+    <div class="w-full md:w-2/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
         <h2 class="font-semibold text-lg">${name}</h2>
         <div class="flex">
             <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
@@ -80,10 +167,15 @@ const renderSelectedPkJob = (pkJob) => {
             <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
         </div>
         <p><strong>Description: </strong>${description}</p>
-        <span><strong>Location: </strong>${location}</span><br>
+        <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
         <span><strong>Level required: </strong>${level}</span><br>
         <address><small><strong>Contact: </strong>${email}</small></address>
-        <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Delete</button>
+        <div class="flex">
+            <div class="mr-3">
+                <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" onclick="unhideDelete()">Delete</button>
+            </div>
+            <span id="are-u-sure" class="hidden self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-1/2 md:w-auto">Are you sure? <button class="font-semibold text-green-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
+        </div>
     </div>
     `
 }
@@ -100,7 +192,7 @@ const renderPokeJobs = (pokeJobs) => {
                 <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
             </div>
             <p><strong>Description: </strong>${description}</p>
-            <span><strong>Location: </strong>${location}</span><br>
+            <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
             <span><strong>Level required: </strong>${level}</span><br>
             <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
         </div>
@@ -138,8 +230,9 @@ for (const btn of $$(".add-job-link")) {
     })
 }
 
-$("#modal-btn-cancel").addEventListener("click", () => {
-    $("#container-modal").classList.add("hidden")
+$("#modal-btn-cancel").addEventListener("click", (e) => {
+    e.preventDefault()
+    hideElement($("#container-modal"))
 })
 
 // Modal checkboxes
@@ -160,31 +253,27 @@ for (const checkbox of pkTypes) {
 }
 
 // Modal posting pokejob
-$("#modal-btn-add").addEventListener("click", (e) => {
+$("#new-pkjob").addEventListener("submit", (e) => {
     e.preventDefault()
-    if ($("#addjob-name").value === '') {
-        return $(".modal-error-name").classList.remove("hidden")
-    }
-    if ($("#addjob-description").value === '') {
-        return $(".modal-error-description").classList.remove("hidden")
-    }
     if (maxThreeTypes().length === 0) {
-        $("#choose-pktype").innerHTML = ''
-        $("#choose-pktype").style.color = "red"
-         return $("#choose-pktype").innerHTML = 'Please choose at least one poké-type'
+            $("#choose-pktype").innerHTML = ''
+            $("#choose-pktype").style.color = "red"
+            return $("#choose-pktype").innerHTML = 'Please choose at least one poké-type'
     }
-    if ($("#addjob-level").value === '') {
-        return $(".modal-error-level").classList.remove("hidden")
-    }
-    if ($("#addjob-email").value === '') {
-        return $(".modal-error-email").classList.remove("hidden")
-    }
-    else { 
+     else {
         postPokeJob()
-        $("#container-modal").classList.add("hidden") 
+        hideElement($("#container-modal")) 
     }
 }) 
 
+
+for (const checkbox of $$(".pk-type")) {
+    checkbox.addEventListener("change", () => {
+        $("#choose-pktype").innerHTML = ''
+        $("#choose-pktype").style.color = "#035A9A"
+        $("#choose-pktype").innerHTML = 'You can choose up to 3 types'
+    })
+}
 
 // Burger menu
 $(".mobile-menu-button").addEventListener("click", () => {

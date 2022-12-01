@@ -134,6 +134,8 @@ body { font-family: 'Poppins', sans-serif; }
   }
 }
 
+.error-modal { border: red 2px solid; }
+
 /* FOOTER */
 .footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
 
