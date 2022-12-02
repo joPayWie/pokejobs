@@ -182,6 +182,7 @@ const renderSelectedPkJob = (pkJob) => {
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
+    $("#job-container").innerHTML = ''
     for (const { id, name, description, location, pkType, level } of pokeJobs) {
         $("#job-container").innerHTML += ` 
         <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
