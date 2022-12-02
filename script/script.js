@@ -71,43 +71,6 @@ FILTERS
 ----------------------------------------------------------------------------
 */
 
-let cagate = [{
-    "name": "Fireman",
-    "description": "You will have to put out forest and home fires. Mandatory being water type.",
-    "location": "johto",
-    "pkType": ["water"],
-    "level": 50,
-    "id": "1",
-    "email": "firemen123@pkmn.com" 
-   },
-   {
-    "name": "Energy booster",
-    "description": "Your duty will be to provide energy to different establishments (hospitals, companies, etc.). Mandatory to be electric type.",
-    "location": "kanto",
-    "pkType": ["electric"],
-    "level": 20,
-    "id": "2",
-    "email": "energyplant@pkmn.com" 
-   },
-   {
-    "name": "Water transfers",
-    "description": "You will make transfers from one place to another through water, using a safety trailer. Part time job. Desirable water type.",
-    "location": "hoenn",
-    "pkType": ["water"],
-    "level": 60,
-    "id": "3",
-    "email": "acquatic-transfers@pkmn.com" 
-   },
-   {
-    "name": "Trash burning",
-    "description": "Garbage burning and ash management.",
-    "location": "johto",
-    "pkType": ["fire"],
-    "level": 35,
-    "id": "4",
-    "email": "goodbye-garbage@pkmn.com" 
-   }]
-
 const filterByName = (pokeJobs, nameSearched) => {
     const filterArr = pokeJobs.filter(pokeJob => {
         let pkJobName = pokeJob.name.toLowerCase()
@@ -240,6 +203,10 @@ $("#search-button").addEventListener("click", (e) => {
     getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
 })
 
+$("#clear-button").addEventListener("click", (e) => {
+    e.preventDefault()
+    $("#search-form").reset()
+})
 
 // Pkmn sprites in menu
 const pokeLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 1, 2, 3, 4, 5, 6, 7];
