@@ -71,20 +71,6 @@ FILTERS
 ----------------------------------------------------------------------------
 */
 
-const filterBy = (pokeJobs, key, value) => {
-    const filterArr = pokeJobs.filter(pokeJob => {
-      return pokeJob[key] === value
-    })
-    return filterArr
-}
-
-getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
-
-const searchLocationInput = $("#search-location")
-const searchTypeInput = $("#search-type")
-const searchLevelInput = $("#search-level")
-
-
 let cagate = [{
     "name": "Fireman",
     "description": "You will have to put out forest and home fires. Mandatory being water type.",
@@ -122,6 +108,22 @@ let cagate = [{
     "email": "goodbye-garbage@pkmn.com" 
    }]
 
+const filterBy = (pokeJobs, key, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+      return pokeJob[key] === value
+    })
+    return filterArr
+}
+
+getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+
+const searchLocationInput = $("#search-location")
+const searchTypeInput = $("#search-type")
+const searchLevelInput = $("#search-level")
+
+
+
+
 const filterJobs = (data) => {
     let arrayFiltered = data
     if (searchLocationInput.value !== 'all') {
@@ -152,10 +154,11 @@ const unhideDelete = () => {
 
 const hideDelete = () => {
     hideElement($("#are-u-sure"))
-}
+} // if I put hideElement directly in the onclick event, doesn't work.
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
+    const sureDeleting = $("#are-u-sure")
     const { id, name, pkType, description, location, level, email } = pkJob
     $("#job-container").innerHTML = ``
     $("#job-container").innerHTML = `
@@ -171,10 +174,10 @@ const renderSelectedPkJob = (pkJob) => {
         <span><strong>Level required: </strong>${level}</span><br>
         <address><small><strong>Contact: </strong>${email}</small></address>
         <div class="flex">
-            <div class="mr-3">
+            <div class="w-1/4">
                 <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" onclick="unhideDelete()">Delete</button>
             </div>
-            <span id="are-u-sure" class="hidden self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-1/2 md:w-auto">Are you sure? <button class="font-semibold text-green-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
+            <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
         </div>
     </div>
     `
