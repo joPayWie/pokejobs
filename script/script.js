@@ -108,32 +108,56 @@ let cagate = [{
     "email": "goodbye-garbage@pkmn.com" 
    }]
 
-const filterBy = (pokeJobs, key, value) => {
+const filterByName = (pokeJobs, nameSearched) => {
     const filterArr = pokeJobs.filter(pokeJob => {
-      return pokeJob[key] === value
+        let pkJobName = pokeJob.name.toLowerCase()
+        pkJobName = pkJobName.split(' ')
+        for ( let i = 0; i < pkJobName.length; i++ ) {
+            let eachWord = pkJobName[i]
+            for ( let  j = 0; j < eachWord.length; j++ ) {
+                if ( eachWord.includes(nameSearched.toLowerCase())) {
+                    return pokeJob
+                }
+            }
+        }
     })
     return filterArr
 }
 
-getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+const filterByLocation = (pokeJobs, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+      return pokeJob.location === value
+    })
+    return filterArr
+}
 
-const searchLocationInput = $("#search-location")
-const searchTypeInput = $("#search-type")
-const searchLevelInput = $("#search-level")
+const filterByType = (pokeJobs, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+        return pokeJob.pkType.includes(value)
+    }) 
+    return filterArr
+}
 
-
-
+const filterByLevel = (pokeJobs) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+        return pokeJob.level <= $("#search-level").value
+    })
+    return filterArr
+}
 
 const filterJobs = (data) => {
     let arrayFiltered = data
-    if (searchLocationInput.value !== 'all') {
-        arrayFiltered = filterBy(arrayFiltered, 'location', searchLocationInput.value)
+    if ($("#search-name").value !== '') {
+        arrayFiltered = filterByName(arrayFiltered, $("#search-name").value)
     }
-    if (searchTypeInput.value !== 'all') {
-        arrayFiltered = filterBy(arrayFiltered, 'type', searchTypeInput.value)
+    if ($("#search-location").value !== 'all') {
+        arrayFiltered = filterByLocation(arrayFiltered, $("#search-location").value)
     }
-    if (searchLevelInput !== 'all') {
-        
+    if ($("#search-type").value !== 'all') {    
+        arrayFiltered = filterByType(arrayFiltered, $("#search-type").value)
+    }
+    if ($("#search-level").value !== 'all') {
+        arrayFiltered = filterByLevel(arrayFiltered)
     }
     return arrayFiltered
 }
@@ -209,6 +233,13 @@ const renderPokeJobs = (pokeJobs) => {
         } 
     }
 }
+
+// Search jobs
+$("#search-button").addEventListener("click", (e) => {
+    e.preventDefault()
+    getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+})
+
 
 // Pkmn sprites in menu
 const pokeLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 1, 2, 3, 4, 5, 6, 7];
