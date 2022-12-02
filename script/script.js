@@ -71,67 +71,56 @@ FILTERS
 ----------------------------------------------------------------------------
 */
 
-const filterBy = (pokeJobs, key, value) => {
+const filterByName = (pokeJobs, nameSearched) => {
     const filterArr = pokeJobs.filter(pokeJob => {
-      return pokeJob[key] === value
+        let pkJobName = pokeJob.name.toLowerCase()
+        pkJobName = pkJobName.split(' ')
+        for ( let i = 0; i < pkJobName.length; i++ ) {
+            let eachWord = pkJobName[i]
+            for ( let  j = 0; j < eachWord.length; j++ ) {
+                if ( eachWord.includes(nameSearched.toLowerCase())) {
+                    return pokeJob
+                }
+            }
+        }
     })
     return filterArr
 }
 
-getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+const filterByLocation = (pokeJobs, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+      return pokeJob.location === value
+    })
+    return filterArr
+}
 
-const searchLocationInput = $("#search-location")
-const searchTypeInput = $("#search-type")
-const searchLevelInput = $("#search-level")
+const filterByType = (pokeJobs, value) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+        return pokeJob.pkType.includes(value)
+    }) 
+    return filterArr
+}
 
-
-let cagate = [{
-    "name": "Fireman",
-    "description": "You will have to put out forest and home fires. Mandatory being water type.",
-    "location": "johto",
-    "pkType": ["water"],
-    "level": 50,
-    "id": "1",
-    "email": "firemen123@pkmn.com" 
-   },
-   {
-    "name": "Energy booster",
-    "description": "Your duty will be to provide energy to different establishments (hospitals, companies, etc.). Mandatory to be electric type.",
-    "location": "kanto",
-    "pkType": ["electric"],
-    "level": 20,
-    "id": "2",
-    "email": "energyplant@pkmn.com" 
-   },
-   {
-    "name": "Water transfers",
-    "description": "You will make transfers from one place to another through water, using a safety trailer. Part time job. Desirable water type.",
-    "location": "hoenn",
-    "pkType": ["water"],
-    "level": 60,
-    "id": "3",
-    "email": "acquatic-transfers@pkmn.com" 
-   },
-   {
-    "name": "Trash burning",
-    "description": "Garbage burning and ash management.",
-    "location": "johto",
-    "pkType": ["fire"],
-    "level": 35,
-    "id": "4",
-    "email": "goodbye-garbage@pkmn.com" 
-   }]
+const filterByLevel = (pokeJobs) => {
+    const filterArr = pokeJobs.filter(pokeJob => {
+        return pokeJob.level <= $("#search-level").value
+    })
+    return filterArr
+}
 
 const filterJobs = (data) => {
     let arrayFiltered = data
-    if (searchLocationInput.value !== 'all') {
-        arrayFiltered = filterBy(arrayFiltered, 'location', searchLocationInput.value)
+    if ($("#search-name").value !== '') {
+        arrayFiltered = filterByName(arrayFiltered, $("#search-name").value)
     }
-    if (searchTypeInput.value !== 'all') {
-        arrayFiltered = filterBy(arrayFiltered, 'type', searchTypeInput.value)
+    if ($("#search-location").value !== 'all') {
+        arrayFiltered = filterByLocation(arrayFiltered, $("#search-location").value)
     }
-    if (searchLevelInput !== 'all') {
-        
+    if ($("#search-type").value !== 'all') {    
+        arrayFiltered = filterByType(arrayFiltered, $("#search-type").value)
+    }
+    if ($("#search-level").value !== 'all') {
+        arrayFiltered = filterByLevel(arrayFiltered)
     }
     return arrayFiltered
 }
@@ -152,10 +141,11 @@ const unhideDelete = () => {
 
 const hideDelete = () => {
     hideElement($("#are-u-sure"))
-}
+} // if I put hideElement directly in the onclick event, doesn't work.
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
+    const sureDeleting = $("#are-u-sure")
     const { id, name, pkType, description, location, level, email } = pkJob
     $("#job-container").innerHTML = ``
     $("#job-container").innerHTML = `
@@ -171,10 +161,10 @@ const renderSelectedPkJob = (pkJob) => {
         <span><strong>Level required: </strong>${level}</span><br>
         <address><small><strong>Contact: </strong>${email}</small></address>
         <div class="flex">
-            <div class="mr-3">
+            <div class="w-1/4">
                 <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" onclick="unhideDelete()">Delete</button>
             </div>
-            <span id="are-u-sure" class="hidden self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-1/2 md:w-auto">Are you sure? <button class="font-semibold text-green-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
+            <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
         </div>
     </div>
     `
@@ -182,6 +172,7 @@ const renderSelectedPkJob = (pkJob) => {
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
+    $("#job-container").innerHTML = ''
     for (const { id, name, description, location, pkType, level } of pokeJobs) {
         $("#job-container").innerHTML += ` 
         <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
@@ -205,6 +196,17 @@ const renderPokeJobs = (pokeJobs) => {
         } 
     }
 }
+
+// Search jobs
+$("#search-button").addEventListener("click", (e) => {
+    e.preventDefault()
+    getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
+})
+
+$("#clear-button").addEventListener("click", (e) => {
+    e.preventDefault()
+    $("#search-form").reset()
+})
 
 // Pkmn sprites in menu
 const pokeLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 1, 2, 3, 4, 5, 6, 7];
