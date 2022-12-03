@@ -35,7 +35,7 @@ const getPokeJobs = async (jobId = '') => {
     return jobs
 }
 
-getPokeJobs().then(data => renderPokeJobs(data))
+getPokeJobs().then(data => renderPokeJobs(data)).catch(() => alert(`Sorry, database is not available at the time :(`))
 
 // post pokejob
 const createNewJob = () => {
@@ -135,71 +135,90 @@ DOM
 const hideElement = (selector) => selector.classList.add("hidden")
 const unHideElement = (selector) => selector.classList.remove("hidden")
 
-const unhideDelete = () => {
-    unHideElement($("#are-u-sure"))
-}
-
-const hideDelete = () => {
-    hideElement($("#are-u-sure"))
-} // if I put hideElement directly in the onclick event, doesn't work.
-
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
-    const sureDeleting = $("#are-u-sure")
-    const { id, name, pkType, description, location, level, email } = pkJob
-    $("#job-container").innerHTML = ``
     $("#job-container").innerHTML = `
-    <div class="w-full md:w-2/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
-        <h2 class="font-semibold text-lg">${name}</h2>
-        <div class="flex">
-            <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
-            <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
-            <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
-        </div>
-        <p><strong>Description: </strong>${description}</p>
-        <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
-        <span><strong>Level required: </strong>${level}</span><br>
-        <address><small><strong>Contact: </strong>${email}</small></address>
-        <div class="flex">
-            <div class="w-1/4">
-                <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" onclick="unhideDelete()">Delete</button>
+    <div>
+        <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
+    </div>`
+    const afterTimeOut = () => {
+        const { id, name, pkType, description, location, level, email } = pkJob
+        $("#job-container").innerHTML = ``
+        $("#job-container").innerHTML = `
+            <div class="flex flex-col md:flex-row justify-center w-full">
+                <div class="self-center">
+                    <button id="go-back-arrow">
+                        <i class="fa-solid fa-arrow-left text-5xl text-[#FEDF63] mx-3 py-1.5 px-2 footer-icons"></i>
+                    <button>
+                </div>
+                <div class="w-full md:w-2/5 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
+                    <h2 class="font-semibold text-lg">${name}</h2>
+                    <div class="flex">
+                        <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
+                        <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
+                        <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+                    </div>
+                    <p><strong>Description: </strong>${description}</p>
+                    <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
+                    <span><strong>Level required: </strong>${level}</span><br>
+                    <address><small><strong>Contact: </strong>${email}</small></address>
+                    <div class="flex">
+                        <div class="w-1/4">
+                            <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
+                        </div>
+                        <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" id="hideDelete">NO</button></span>
+                    </div>
+                </div>
             </div>
-            <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" onclick="hideDelete()">NO</button></span>
-        </div>
-    </div>
-    `
+            `
+            $("#unhideDelete").addEventListener("click", () => {
+                unHideElement($("#are-u-sure"))
+            })
+            $("#hideDelete").addEventListener("click", () => {
+                hideElement($("#are-u-sure"))
+            })
+            $("#go-back-arrow").addEventListener("click", () => {
+                getPokeJobs().then(data => renderPokeJobs(filterJobs(data))).catch(() => alert(`Sorry, database is not available at the time :(`))
+            })
+    }
+    window.setTimeout(afterTimeOut, 1500)
 }
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
     $("#job-container").innerHTML = ''
-    for (const { id, name, description, location, pkType, level } of pokeJobs) {
-        $("#job-container").innerHTML += ` 
-        <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
-            <h2 class="font-semibold text-lg">${name}</h2>
-            <div class="flex">
-                <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
-                <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
-                <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+        $("#job-container").innerHTML = ''
+        for (const { id, name, description, location, pkType, level } of pokeJobs) {
+            $("#job-container").innerHTML += ` 
+            <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
+                <h2 class="font-semibold text-lg">${name}</h2>
+                <div class="flex">
+                    <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
+                    <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
+                    <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+                </div>
+                <p><strong>Description: </strong>${description}</p>
+                <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
+                <span><strong>Level required: </strong>${level}</span><br>
+                <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
             </div>
-            <p><strong>Description: </strong>${description}</p>
-            <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
-            <span><strong>Level required: </strong>${level}</span><br>
-            <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
-        </div>
-        `
-        for (const btn of $$(".details-btn")) {
-            btn.addEventListener("click", () => {
-                let jobId = btn.getAttribute("job-id")
-                getPokeJobs(jobId).then(data => renderSelectedPkJob(data))
-            })
-        } 
-    }
+            `
+            for (const btn of $$(".details-btn")) {
+                btn.addEventListener("click", () => {
+                    let jobId = btn.getAttribute("job-id")
+                    getPokeJobs(jobId).then(data => renderSelectedPkJob(data)).catch(() => alert(`Sorry, database is not available at the time :(`))
+                })
+            } 
+        }
 }
 
 // Search jobs
 $("#search-button").addEventListener("click", (e) => {
     e.preventDefault()
+    $("#job-container").innerHTML = `
+    <div>
+        <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
+    </div>`
     getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
 })
 
