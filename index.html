@@ -20,7 +20,8 @@
         <!-- modal "add a job" -->
         <section id="container-modal" class="hidden fixed bg-[rgba(0,0,0,0.2)] w-full h-full flex justify-center items-center">
             <div class="window-modal bg-white min-h-fit h-full md:h-auto w-full md:w-4/5 lg:w-1/2 rounded-md md:m-5 p-8 shadow-md overflow-y-scroll">
-                <h2 class="retro-font text-xl text-stone-800 font-bold">Add a PokéJOB</h2>
+                <h2 class="retro-font text-xl text-stone-800 font-bold" id="addpkjob-title">Add a PokéJOB</h2>
+                <h2 class="hidden retro-font text-xl text-stone-800 font-bold" id="editpkjob-title">Edit PokéJOB</h2>
                 <form class="flex flex-col md:flex-row justify-around" id="new-pkjob">
                     <aside class="w-full md:w-1/2 mr-5">
                         <div class="flex flex-col">
@@ -135,12 +136,15 @@
                             <label for="addjob-level" class="font-bold mt-2">Level</label>
                             <input type="number" name="addjob-level" id="addjob-level" class="border-2" placeholder="Minimum level required" required>
                         </div>
-                        <div class="mt-5 flex justify-end">
+                        <div class="mt-5 flex justify-end" id="btns-addmodal">
                             <input type="submit" value="Add" id="modal-btn-add"
-                                class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in"> 
-                            <button id="modal-btn-cancel"
-                                class="self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">
-                                Cancel </button>
+                                class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in cursor-pointer"> 
+                            <button class="modal-btn-cancel self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">Cancel</button>
+                        </div>
+                        <div class="hidden mt-5 flex justify-end" id="btns-editmodal">
+                            <input type="submit" value="Save" id="modal-btn-save"
+                                class="self-start lg:self-end text-white bg-[#36A95E] rounded-md p-3 mr-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in cursor-pointer"> 
+                            <button class="modal-btn-cancel self-start lg:self-end text-white bg-red-600 rounded-md p-3 ml-2 mt-3 lg:mt-0 hover:bg-[#53AEE5] transition duration-150 hover:ease-in ">Cancel</button>
                         </div>
                     </aside>
                 </form>

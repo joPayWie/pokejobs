@@ -61,7 +61,18 @@ const postPokeJob = async () => {
 
 const deletePokeJob = async (jobId) => {
     fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
-        method: "DELETE"
+    method: "DELETE"
+    }).finally(() => window.location.href = "index.html")
+}
+
+// put
+const editPokeJob  = async (jobId) => {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+    method: "PUT",
+    headers: {
+        'Content-Type': 'Application/json'
+    },
+    body: JSON.stringify(createNewJob())
     }).finally(() => window.location.href = "index.html")
 }
 
@@ -72,7 +83,7 @@ FILTERS
 */
 
 const filterByName = (pokeJobs, nameSearched) => {
-    const filterArr = pokeJobs.filter(pokeJob => {
+    return pokeJobs.filter(pokeJob => {
         let pkJobName = pokeJob.name.toLowerCase()
         pkJobName = pkJobName.split(' ')
         for ( let i = 0; i < pkJobName.length; i++ ) {
@@ -84,28 +95,24 @@ const filterByName = (pokeJobs, nameSearched) => {
             }
         }
     })
-    return filterArr
 }
 
 const filterByLocation = (pokeJobs, value) => {
-    const filterArr = pokeJobs.filter(pokeJob => {
+    return pokeJobs.filter(pokeJob => {
       return pokeJob.location === value
     })
-    return filterArr
 }
 
 const filterByType = (pokeJobs, value) => {
-    const filterArr = pokeJobs.filter(pokeJob => {
+    return pokeJobs.filter(pokeJob => {
         return pokeJob.pkType.includes(value)
     }) 
-    return filterArr
 }
 
 const filterByLevel = (pokeJobs) => {
-    const filterArr = pokeJobs.filter(pokeJob => {
+    return pokeJobs.filter(pokeJob => {
         return pokeJob.level <= $("#search-level").value
     })
-    return filterArr
 }
 
 const filterJobs = (data) => {
@@ -125,7 +132,6 @@ const filterJobs = (data) => {
     return arrayFiltered
 }
 
-
 /* 
 ----------------------------------------------------------------------------
 DOM
@@ -134,6 +140,14 @@ DOM
 
 const hideElement = (selector) => selector.classList.add("hidden")
 const unHideElement = (selector) => selector.classList.remove("hidden")
+
+const typeCheckboxes = $$(".pk-type") 
+
+const cleanPkTypes = () => {
+    for (const checkbox of typeCheckboxes) {
+        checkbox.checked = false
+    }
+}
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
@@ -164,7 +178,7 @@ const renderSelectedPkJob = (pkJob) => {
                     <address><small><strong>Contact: </strong>${email}</small></address>
                     <div class="flex">
                         <div class="w-1/4">
-                            <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
+                            <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="edit-job">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
                         </div>
                         <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" id="hideDelete">NO</button></span>
                     </div>
@@ -180,14 +194,40 @@ const renderSelectedPkJob = (pkJob) => {
             $("#go-back-arrow").addEventListener("click", () => {
                 getPokeJobs().then(data => renderPokeJobs(filterJobs(data))).catch(() => alert(`Sorry, database is not available at the time :(`))
             })
+            $("#edit-job").addEventListener("click", () => {
+                hideElement($("#btns-addmodal"))
+                hideElement(("#addpkjob-title"))
+                unHideElement($("#editpkjob-title"))
+                unHideElement($("#btns-editmodal"))
+                unHideElement($("#container-modal"))
+                cleanPkTypes()
+                $("#addjob-name").value = name
+                $("#addjob-description").value = description
+                $("#addjob-location").value = location
+                $("#addjob-level").value = level
+                $("#addjob-email").value = email
+                for (let type of $$(".pk-type")) {
+                    for (let i = 0; i < pkType.length; i++) {
+                        if (pkType[i] === type.value) {
+                            type.checked = true
+                        } 
+                    }
+            }
+        })
+        $("#modal-btn-save").setAttribute("job-id", id)
     }
     window.setTimeout(afterTimeOut, 1500)
 }
 
+$("#modal-btn-save").addEventListener("click", (e) => {
+    e.preventDefault()
+    const jobId = $("#modal-btn-save").getAttribute("job-id")
+    getPokeJobs().then(() => editPokeJob(jobId))
+})
+
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
     $("#job-container").innerHTML = ''
-        $("#job-container").innerHTML = ''
         for (const { id, name, description, location, pkType, level } of pokeJobs) {
             $("#job-container").innerHTML += ` 
             <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
@@ -247,14 +287,20 @@ showRandomPkmn()
 // Modal
 for (const btn of $$(".add-job-link")) { 
     btn.addEventListener("click", () => {
-        $("#container-modal").classList.remove("hidden")
+        unHideElement($("#btns-addmodal"))
+        unHideElement($("#addpkjob-title"))
+        hideElement($("#editpkjob-title"))
+        hideElement($("#btns-editmodal"))
+        unHideElement($("#container-modal"))
     })
 }
 
-$("#modal-btn-cancel").addEventListener("click", (e) => {
-    e.preventDefault()
-    hideElement($("#container-modal"))
-})
+for (const cancelBtn of $$(".modal-btn-cancel")) {
+    cancelBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+        hideElement($("#container-modal"))
+    })
+}   
 
 // Modal checkboxes
 for (const checkbox of pkTypes) {
@@ -286,7 +332,6 @@ $("#new-pkjob").addEventListener("submit", (e) => {
         hideElement($("#container-modal")) 
     }
 }) 
-
 
 for (const checkbox of $$(".pk-type")) {
     checkbox.addEventListener("change", () => {
