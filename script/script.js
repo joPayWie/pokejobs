@@ -152,8 +152,30 @@ const cleanPkTypes = () => {
 }
 
 // Edit pokejob functionality
-const editPokeJobFunction = () => {
-
+const insideEditPkJob = (name, description, location, level, email, pkType) => {
+    hideElement($("#btns-addmodal"))
+    hideElement($("#addpkjob-title"))
+    unHideElement($("#editpkjob-title"))
+    unHideElement($("#btns-editmodal"))
+    unHideElement($("#container-modal"))
+    cleanPkTypes()
+    $("#addjob-name").value = name
+    $("#addjob-description").value = description
+    $("#addjob-location").value = location
+    $("#addjob-level").value = level
+    $("#addjob-email").value = email
+    for (let type of typeCheckboxes) {
+        for (let i = 0; i < pkType.length; i++) {
+            if (pkType[i] === type.value) {
+                type.checked = true
+            } 
+        } 
+    }
+    for (let type of typeCheckboxes) {
+        if (maxThreeTypes().length === 3 && type.checked === false) {
+            type.setAttribute("disabled", '')
+        }
+    }
 }
 
 // Show details of pokejob
@@ -202,29 +224,7 @@ const renderSelectedPkJob = (pkJob) => {
                 getPokeJobs().then(data => renderPokeJobs(filterJobs(data))).catch(() => alert(`Sorry, database is not available at the time :(`))
             })
             $("#edit-job").addEventListener("click", () => {
-                hideElement($("#btns-addmodal"))
-                hideElement($("#addpkjob-title"))
-                unHideElement($("#editpkjob-title"))
-                unHideElement($("#btns-editmodal"))
-                unHideElement($("#container-modal"))
-                cleanPkTypes()
-                $("#addjob-name").value = name
-                $("#addjob-description").value = description
-                $("#addjob-location").value = location
-                $("#addjob-level").value = level
-                $("#addjob-email").value = email
-                for (let type of typeCheckboxes) {
-                    for (let i = 0; i < pkType.length; i++) {
-                        if (pkType[i] === type.value) {
-                            type.checked = true
-                        } 
-                    } 
-                }
-                for (let type of typeCheckboxes) {
-                    if (maxThreeTypes().length === 3 && type.checked === false) {
-                        type.setAttribute("disabled", '')
-                    }
-                }
+                insideEditPkJob(name, description, location, level, email, pkType)
         })
         $("#modal-btn-save").setAttribute("job-id", id)
     }
