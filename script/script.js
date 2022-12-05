@@ -129,6 +129,9 @@ const filterJobs = (data) => {
     if ($("#search-level").value !== 'all') {
         arrayFiltered = filterByLevel(arrayFiltered)
     }
+    if (arrayFiltered.length === 0) {
+        return alert("No hay trabajos disponibles")
+    } // tocar esto
     return arrayFiltered
 }
 
@@ -196,7 +199,7 @@ const renderSelectedPkJob = (pkJob) => {
             })
             $("#edit-job").addEventListener("click", () => {
                 hideElement($("#btns-addmodal"))
-                hideElement(("#addpkjob-title"))
+                hideElement($("#addpkjob-title"))
                 unHideElement($("#editpkjob-title"))
                 unHideElement($("#btns-editmodal"))
                 unHideElement($("#container-modal"))
