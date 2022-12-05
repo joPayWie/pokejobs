@@ -12,11 +12,11 @@ const putInUpperCase = (location) => {
     return locationUpper
 } 
 
-const pkTypes = $$(".pk-type")
+const typeCheckboxes = $$(".pk-type") 
 
 const maxThreeTypes = () => {
     let checkedArr = []
-    for (const checkbox of pkTypes) {
+    for (const checkbox of typeCheckboxes) {
         if (checkbox.checked && checkedArr.length < 3) {
             checkedArr.push(checkbox.value)
         }
@@ -144,12 +144,16 @@ DOM
 const hideElement = (selector) => selector.classList.add("hidden")
 const unHideElement = (selector) => selector.classList.remove("hidden")
 
-const typeCheckboxes = $$(".pk-type") 
-
 const cleanPkTypes = () => {
     for (const checkbox of typeCheckboxes) {
         checkbox.checked = false
+        checkbox.removeAttribute("disabled")
     }
+}
+
+// Edit pokejob functionality
+const editPokeJobFunction = () => {
+
 }
 
 // Show details of pokejob
@@ -209,24 +213,23 @@ const renderSelectedPkJob = (pkJob) => {
                 $("#addjob-location").value = location
                 $("#addjob-level").value = level
                 $("#addjob-email").value = email
-                for (let type of $$(".pk-type")) {
+                for (let type of typeCheckboxes) {
                     for (let i = 0; i < pkType.length; i++) {
                         if (pkType[i] === type.value) {
                             type.checked = true
                         } 
+                    } 
+                }
+                for (let type of typeCheckboxes) {
+                    if (maxThreeTypes().length === 3 && type.checked === false) {
+                        type.setAttribute("disabled", '')
                     }
-            }
+                }
         })
         $("#modal-btn-save").setAttribute("job-id", id)
     }
     window.setTimeout(afterTimeOut, 1500)
 }
-
-$("#modal-btn-save").addEventListener("click", (e) => {
-    e.preventDefault()
-    const jobId = $("#modal-btn-save").getAttribute("job-id")
-    getPokeJobs().then(() => editPokeJob(jobId))
-})
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
@@ -287,13 +290,15 @@ const showRandomPkmn = () => {
 
 showRandomPkmn()
 
-// Modal
+// Modal add job
 for (const btn of $$(".add-job-link")) { 
     btn.addEventListener("click", () => {
         unHideElement($("#btns-addmodal"))
         unHideElement($("#addpkjob-title"))
         hideElement($("#editpkjob-title"))
         hideElement($("#btns-editmodal"))
+        $("#new-pkjob").reset()
+        cleanPkTypes()
         unHideElement($("#container-modal"))
     })
 }
@@ -306,16 +311,16 @@ for (const cancelBtn of $$(".modal-btn-cancel")) {
 }   
 
 // Modal checkboxes
-for (const checkbox of pkTypes) {
+for (const checkbox of typeCheckboxes) {
     checkbox.addEventListener("change", () => {
         if ( maxThreeTypes().length === 3 ) {
-            for (const checkbox of pkTypes) {
+            for (const checkbox of typeCheckboxes) {
                 if (!checkbox.checked) {
                     checkbox.setAttribute("disabled", '')
                 }
             }
         } else {
-            for (const checkbox of pkTypes) {
+            for (const checkbox of typeCheckboxes) {
                 checkbox.removeAttribute("disabled", '')
             }
         }
@@ -336,13 +341,20 @@ $("#new-pkjob").addEventListener("submit", (e) => {
     }
 }) 
 
-for (const checkbox of $$(".pk-type")) {
+for (const checkbox of typeCheckboxes) {
     checkbox.addEventListener("change", () => {
         $("#choose-pktype").innerHTML = ''
         $("#choose-pktype").style.color = "#035A9A"
         $("#choose-pktype").innerHTML = 'You can choose up to 3 types'
     })
 }
+
+// Modal editing pkjob
+$("#modal-btn-save").addEventListener("click", (e) => {
+    e.preventDefault()
+    const jobId = $("#modal-btn-save").getAttribute("job-id")
+    getPokeJobs().then(() => editPokeJob(jobId))
+})
 
 // Burger menu
 $(".mobile-menu-button").addEventListener("click", () => {
