@@ -129,9 +129,9 @@ const filterJobs = (data) => {
     if ($("#search-level").value !== 'all') {
         arrayFiltered = filterByLevel(arrayFiltered)
     }
-    if (arrayFiltered.length === 0) {
-        return alert("No hay trabajos disponibles")
-    } // tocar esto
+    // if (arrayFiltered.length === 0) {
+    //     return alert("No hay trabajos disponibles")
+    // } // tocar esto
     return arrayFiltered
 }
 
@@ -234,6 +234,7 @@ const renderSelectedPkJob = (pkJob) => {
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
     $("#job-container").innerHTML = ''
+    if (pokeJobs.length !== 0) {
         for (const { id, name, description, location, pkType, level } of pokeJobs) {
             $("#job-container").innerHTML += ` 
             <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
@@ -256,6 +257,15 @@ const renderPokeJobs = (pokeJobs) => {
                 })
             } 
         }
+    }
+    else {
+        $("#job-container").innerHTML = `
+        <div class="flex flex-col items-center text-[#FEDF63] font-semibold p-3">
+            <h2 class="text-xl"> Sorry! We haven't found any pokéjob for this search. </h2>
+            <p class="mt-2"> Please, try another filter selection </p>
+            <img src="./assets/images/clefa.png" alt="clefairy" width="200px" class="mt-2"> 
+        </div>`
+    }       
 }
 
 // Search jobs
