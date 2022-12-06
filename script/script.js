@@ -3,14 +3,10 @@
 GENERAL
 ----------------------------------------------------------------------------
 */
-
 const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
-const putInUpperCase = (location) => {  
-    const locationUpper = location.charAt(0).toUpperCase() + location.slice(1)
-    return locationUpper
-} 
+const putInUpperCase = (location) => location.charAt(0).toUpperCase() + location.slice(1)
 
 const typeCheckboxes = $$(".pk-type") 
 
@@ -22,7 +18,6 @@ const maxThreeTypes = () => {
         }
     } return checkedArr
 }
-
 /* 
 ----------------------------------------------------------------------------
 API fetching
@@ -30,7 +25,7 @@ API fetching
 */
 // get pokejobs
 const getPokeJobs = async (jobId = '') => {
-    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`)
+    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`)
     const jobs = await response.json()
     return jobs
 }
@@ -50,7 +45,7 @@ const createNewJob = () => {
 }
 
 const postPokeJob = async () => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs`, {
     method: "POST",
     headers: {
         'Content-Type': 'Application/json'
@@ -60,14 +55,14 @@ const postPokeJob = async () => {
 }
 
 const deletePokeJob = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "DELETE"
     }).finally(() => window.location.href = "index.html")
 }
 
 // put
 const editPokeJob  = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "PUT",
     headers: {
         'Content-Type': 'Application/json'
@@ -75,21 +70,19 @@ const editPokeJob  = async (jobId) => {
     body: JSON.stringify(createNewJob())
     }).finally(() => window.location.href = "index.html")
 }
-
 /* 
 ----------------------------------------------------------------------------
 FILTERS
 ----------------------------------------------------------------------------
 */
-
 const filterByName = (pokeJobs, nameSearched) => {
     return pokeJobs.filter(pokeJob => {
         let pkJobName = pokeJob.name.toLowerCase()
         pkJobName = pkJobName.split(' ')
-        for ( let i = 0; i < pkJobName.length; i++ ) {
+        for (let i = 0; i < pkJobName.length; i++) {
             let eachWord = pkJobName[i]
-            for ( let  j = 0; j < eachWord.length; j++ ) {
-                if ( eachWord.includes(nameSearched.toLowerCase())) {
+            for (let  j = 0; j < eachWord.length; j++) {
+                if (eachWord.includes(nameSearched.toLowerCase())) {
                     return pokeJob
                 }
             }
@@ -97,23 +90,14 @@ const filterByName = (pokeJobs, nameSearched) => {
     })
 }
 
-const filterByLocation = (pokeJobs, value) => {
-    return pokeJobs.filter(pokeJob => {
-      return pokeJob.location === value
-    })
-}
+const filterByLocation = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
+      return pokeJob.location === value })
 
-const filterByType = (pokeJobs, value) => {
-    return pokeJobs.filter(pokeJob => {
-        return pokeJob.pkType.includes(value)
-    }) 
-}
+const filterByType = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
+        return pokeJob.pkType.includes(value) })
 
-const filterByLevel = (pokeJobs) => {
-    return pokeJobs.filter(pokeJob => {
-        return pokeJob.level <= $("#search-level").value
-    })
-}
+const filterByLevel = (pokeJobs) => pokeJobs.filter(pokeJob => {
+        return pokeJob.level <= $("#search-level").value })
 
 const filterJobs = (data) => {
     let arrayFiltered = data
@@ -129,18 +113,13 @@ const filterJobs = (data) => {
     if ($("#search-level").value !== 'all') {
         arrayFiltered = filterByLevel(arrayFiltered)
     }
-    // if (arrayFiltered.length === 0) {
-    //     return alert("No hay trabajos disponibles")
-    // } // tocar esto
     return arrayFiltered
 }
-
 /* 
 ----------------------------------------------------------------------------
 DOM
 ----------------------------------------------------------------------------
 */
-
 const hideElement = (selector) => selector.classList.add("hidden")
 const unHideElement = (selector) => selector.classList.remove("hidden")
 
@@ -150,6 +129,10 @@ const cleanPkTypes = () => {
         checkbox.removeAttribute("disabled")
     }
 }
+
+const jobContainer = $("#job-container")
+
+const cleanJobContainer = () => jobContainer.innerHTML = ''
 
 // Edit pokejob functionality
 const insideEditPkJob = (name, description, location, level, email, pkType) => {
@@ -180,14 +163,14 @@ const insideEditPkJob = (name, description, location, level, email, pkType) => {
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
-    $("#job-container").innerHTML = `
+    jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`
     const afterTimeOut = () => {
         const { id, name, pkType, description, location, level, email } = pkJob
-        $("#job-container").innerHTML = ``
-        $("#job-container").innerHTML = `
+        cleanJobContainer()
+        jobContainer.innerHTML = `
             <div class="flex flex-col md:flex-row justify-center w-full">
                 <div class="self-center">
                     <button id="go-back-arrow">
@@ -233,10 +216,10 @@ const renderSelectedPkJob = (pkJob) => {
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
-    $("#job-container").innerHTML = ''
+    cleanJobContainer()
     if (pokeJobs.length !== 0) {
         for (const { id, name, description, location, pkType, level } of pokeJobs) {
-            $("#job-container").innerHTML += ` 
+            jobContainer.innerHTML += ` 
             <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
                 <h2 class="font-semibold text-lg">${name}</h2>
                 <div class="flex">
@@ -259,7 +242,7 @@ const renderPokeJobs = (pokeJobs) => {
         }
     }
     else {
-        $("#job-container").innerHTML = `
+        jobContainer.innerHTML = `
         <div class="flex flex-col items-center text-[#FEDF63] font-semibold p-3">
             <h2 class="text-xl"> Sorry! We haven't found any pokéjob for this search. </h2>
             <p class="mt-2"> Please, try another filter selection </p>
@@ -271,7 +254,7 @@ const renderPokeJobs = (pokeJobs) => {
 // Search jobs
 $("#search-button").addEventListener("click", (e) => {
     e.preventDefault()
-    $("#job-container").innerHTML = `
+    jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`
