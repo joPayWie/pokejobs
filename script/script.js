@@ -3,26 +3,21 @@
 GENERAL
 ----------------------------------------------------------------------------
 */
-
 const $ = (selector) => document.querySelector(selector)
 const $$ = (selector) => document.querySelectorAll(selector)
 
-const putInUpperCase = (location) => {  
-    const locationUpper = location.charAt(0).toUpperCase() + location.slice(1)
-    return locationUpper
-} 
+const putInUpperCase = (location) => location.charAt(0).toUpperCase() + location.slice(1)
 
-const pkTypes = $$(".pk-type")
+const typeCheckboxes = $$(".pk-type") 
 
 const maxThreeTypes = () => {
     let checkedArr = []
-    for (const checkbox of pkTypes) {
+    for (const checkbox of typeCheckboxes) {
         if (checkbox.checked && checkedArr.length < 3) {
             checkedArr.push(checkbox.value)
         }
     } return checkedArr
 }
-
 /* 
 ----------------------------------------------------------------------------
 API fetching
@@ -30,7 +25,7 @@ API fetching
 */
 // get pokejobs
 const getPokeJobs = async (jobId = '') => {
-    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`)
+    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`)
     const jobs = await response.json()
     return jobs
 }
@@ -50,7 +45,7 @@ const createNewJob = () => {
 }
 
 const postPokeJob = async () => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs`, {
     method: "POST",
     headers: {
         'Content-Type': 'Application/json'
@@ -60,14 +55,14 @@ const postPokeJob = async () => {
 }
 
 const deletePokeJob = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "DELETE"
     }).finally(() => window.location.href = "index.html")
 }
 
 // put
 const editPokeJob  = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/tp/jobs/${jobId}`, {
+    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "PUT",
     headers: {
         'Content-Type': 'Application/json'
@@ -75,21 +70,19 @@ const editPokeJob  = async (jobId) => {
     body: JSON.stringify(createNewJob())
     }).finally(() => window.location.href = "index.html")
 }
-
 /* 
 ----------------------------------------------------------------------------
 FILTERS
 ----------------------------------------------------------------------------
 */
-
 const filterByName = (pokeJobs, nameSearched) => {
     return pokeJobs.filter(pokeJob => {
         let pkJobName = pokeJob.name.toLowerCase()
         pkJobName = pkJobName.split(' ')
-        for ( let i = 0; i < pkJobName.length; i++ ) {
+        for (let i = 0; i < pkJobName.length; i++) {
             let eachWord = pkJobName[i]
-            for ( let  j = 0; j < eachWord.length; j++ ) {
-                if ( eachWord.includes(nameSearched.toLowerCase())) {
+            for (let  j = 0; j < eachWord.length; j++) {
+                if (eachWord.includes(nameSearched.toLowerCase())) {
                     return pokeJob
                 }
             }
@@ -97,23 +90,14 @@ const filterByName = (pokeJobs, nameSearched) => {
     })
 }
 
-const filterByLocation = (pokeJobs, value) => {
-    return pokeJobs.filter(pokeJob => {
-      return pokeJob.location === value
-    })
-}
+const filterByLocation = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
+      return pokeJob.location === value })
 
-const filterByType = (pokeJobs, value) => {
-    return pokeJobs.filter(pokeJob => {
-        return pokeJob.pkType.includes(value)
-    }) 
-}
+const filterByType = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
+        return pokeJob.pkType.includes(value) })
 
-const filterByLevel = (pokeJobs) => {
-    return pokeJobs.filter(pokeJob => {
-        return pokeJob.level <= $("#search-level").value
-    })
-}
+const filterByLevel = (pokeJobs) => pokeJobs.filter(pokeJob => {
+        return pokeJob.level <= $("#search-level").value })
 
 const filterJobs = (data) => {
     let arrayFiltered = data
@@ -129,39 +113,64 @@ const filterJobs = (data) => {
     if ($("#search-level").value !== 'all') {
         arrayFiltered = filterByLevel(arrayFiltered)
     }
-    if (arrayFiltered.length === 0) {
-        return alert("No hay trabajos disponibles")
-    } // tocar esto
     return arrayFiltered
 }
-
 /* 
 ----------------------------------------------------------------------------
 DOM
 ----------------------------------------------------------------------------
 */
-
 const hideElement = (selector) => selector.classList.add("hidden")
 const unHideElement = (selector) => selector.classList.remove("hidden")
-
-const typeCheckboxes = $$(".pk-type") 
 
 const cleanPkTypes = () => {
     for (const checkbox of typeCheckboxes) {
         checkbox.checked = false
+        checkbox.removeAttribute("disabled")
+    }
+}
+
+const jobContainer = $("#job-container")
+
+const cleanJobContainer = () => jobContainer.innerHTML = ''
+
+// Edit pokejob functionality
+const insideEditPkJob = (name, description, location, level, email, pkType) => {
+    hideElement($("#btns-addmodal"))
+    hideElement($("#addpkjob-title"))
+    unHideElement($("#editpkjob-title"))
+    unHideElement($("#btns-editmodal"))
+    unHideElement($("#container-modal"))
+    cleanPkTypes()
+    $("#addjob-name").value = name
+    $("#addjob-description").value = description
+    $("#addjob-location").value = location
+    $("#addjob-level").value = level
+    $("#addjob-email").value = email
+    for (let type of typeCheckboxes) {
+        for (let i = 0; i < pkType.length; i++) {
+            if (pkType[i] === type.value) {
+                type.checked = true
+            } 
+        } 
+    }
+    for (let type of typeCheckboxes) {
+        if (maxThreeTypes().length === 3 && type.checked === false) {
+            type.setAttribute("disabled", '')
+        }
     }
 }
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
-    $("#job-container").innerHTML = `
+    jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`
     const afterTimeOut = () => {
         const { id, name, pkType, description, location, level, email } = pkJob
-        $("#job-container").innerHTML = ``
-        $("#job-container").innerHTML = `
+        cleanJobContainer()
+        jobContainer.innerHTML = `
             <div class="flex flex-col md:flex-row justify-center w-full">
                 <div class="self-center">
                     <button id="go-back-arrow">
@@ -198,41 +207,19 @@ const renderSelectedPkJob = (pkJob) => {
                 getPokeJobs().then(data => renderPokeJobs(filterJobs(data))).catch(() => alert(`Sorry, database is not available at the time :(`))
             })
             $("#edit-job").addEventListener("click", () => {
-                hideElement($("#btns-addmodal"))
-                hideElement($("#addpkjob-title"))
-                unHideElement($("#editpkjob-title"))
-                unHideElement($("#btns-editmodal"))
-                unHideElement($("#container-modal"))
-                cleanPkTypes()
-                $("#addjob-name").value = name
-                $("#addjob-description").value = description
-                $("#addjob-location").value = location
-                $("#addjob-level").value = level
-                $("#addjob-email").value = email
-                for (let type of $$(".pk-type")) {
-                    for (let i = 0; i < pkType.length; i++) {
-                        if (pkType[i] === type.value) {
-                            type.checked = true
-                        } 
-                    }
-            }
+                insideEditPkJob(name, description, location, level, email, pkType)
         })
         $("#modal-btn-save").setAttribute("job-id", id)
     }
     window.setTimeout(afterTimeOut, 1500)
 }
 
-$("#modal-btn-save").addEventListener("click", (e) => {
-    e.preventDefault()
-    const jobId = $("#modal-btn-save").getAttribute("job-id")
-    getPokeJobs().then(() => editPokeJob(jobId))
-})
-
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
-    $("#job-container").innerHTML = ''
+    cleanJobContainer()
+    if (pokeJobs.length !== 0) {
         for (const { id, name, description, location, pkType, level } of pokeJobs) {
-            $("#job-container").innerHTML += ` 
+            jobContainer.innerHTML += ` 
             <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
                 <h2 class="font-semibold text-lg">${name}</h2>
                 <div class="flex">
@@ -253,12 +240,21 @@ const renderPokeJobs = (pokeJobs) => {
                 })
             } 
         }
+    }
+    else {
+        jobContainer.innerHTML = `
+        <div class="flex flex-col items-center text-[#FEDF63] font-semibold p-3">
+            <h2 class="text-xl"> Sorry! We haven't found any pokéjob for this search. </h2>
+            <p class="mt-2"> Please, try another filter selection </p>
+            <img src="./assets/images/clefa.png" alt="clefairy" width="200px" class="mt-2"> 
+        </div>`
+    }       
 }
 
 // Search jobs
 $("#search-button").addEventListener("click", (e) => {
     e.preventDefault()
-    $("#job-container").innerHTML = `
+    jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`
@@ -287,13 +283,15 @@ const showRandomPkmn = () => {
 
 showRandomPkmn()
 
-// Modal
+// Modal add job
 for (const btn of $$(".add-job-link")) { 
     btn.addEventListener("click", () => {
         unHideElement($("#btns-addmodal"))
         unHideElement($("#addpkjob-title"))
         hideElement($("#editpkjob-title"))
         hideElement($("#btns-editmodal"))
+        $("#new-pkjob").reset()
+        cleanPkTypes()
         unHideElement($("#container-modal"))
     })
 }
@@ -306,16 +304,16 @@ for (const cancelBtn of $$(".modal-btn-cancel")) {
 }   
 
 // Modal checkboxes
-for (const checkbox of pkTypes) {
+for (const checkbox of typeCheckboxes) {
     checkbox.addEventListener("change", () => {
         if ( maxThreeTypes().length === 3 ) {
-            for (const checkbox of pkTypes) {
+            for (const checkbox of typeCheckboxes) {
                 if (!checkbox.checked) {
                     checkbox.setAttribute("disabled", '')
                 }
             }
         } else {
-            for (const checkbox of pkTypes) {
+            for (const checkbox of typeCheckboxes) {
                 checkbox.removeAttribute("disabled", '')
             }
         }
@@ -336,13 +334,20 @@ $("#new-pkjob").addEventListener("submit", (e) => {
     }
 }) 
 
-for (const checkbox of $$(".pk-type")) {
+for (const checkbox of typeCheckboxes) {
     checkbox.addEventListener("change", () => {
         $("#choose-pktype").innerHTML = ''
         $("#choose-pktype").style.color = "#035A9A"
         $("#choose-pktype").innerHTML = 'You can choose up to 3 types'
     })
 }
+
+// Modal editing pkjob
+$("#modal-btn-save").addEventListener("click", (e) => {
+    e.preventDefault()
+    const jobId = $("#modal-btn-save").getAttribute("job-id")
+    getPokeJobs().then(() => editPokeJob(jobId))
+})
 
 // Burger menu
 $(".mobile-menu-button").addEventListener("click", () => {
