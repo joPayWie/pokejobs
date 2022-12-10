@@ -19,7 +19,7 @@
 <body class="w-full max-w-full bg-blue-900 overflow-x-hidden">
         <!-- modal "add a job" -->
         <section id="container-modal" class="hidden fixed bg-[rgba(0,0,0,0.2)] w-full h-full flex justify-center items-center">
-            <div class="window-modal bg-white min-h-fit h-full md:h-auto w-full md:w-4/5 lg:w-1/2 rounded-md md:m-5 p-8 shadow-md overflow-y-scroll">
+            <div class="window-modal bg-white min-h-fit h-full md:h-auto w-full md:w-11/12 lg:w-2/3 rounded-md lg:m-5 p-3 md:pr-0 lg:p-8 shadow-md overflow-y-scroll">
                 <h2 class="retro-font text-xl text-stone-800 font-bold" id="addpkjob-title">Add a PokéJOB</h2>
                 <h2 class="hidden retro-font text-xl text-stone-800 font-bold" id="editpkjob-title">Edit PokéJOB</h2>
                 <form class="flex flex-col md:flex-row justify-around" id="new-pkjob">
@@ -51,83 +51,137 @@
                         <div class="flex flex-col">
                             <h3 class="font-bold mt-2">PKMN Type</h3>
                             <p class="text-[#035A9A]" id="choose-pktype">You can choose up to 3 types</p>
-                            <div class="flex justify-between">
-                                <div class="flex flex-col items-start">
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-bug">Bug</label>
-                                        <input type="checkbox" name="type-bug" id="type-bug" class="pk-type mx-2" value="bug">
+                            <div class="flex justify-between text-sm lg:text-base">
+                                <div class="flex flex-col items-start mr-2">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/bug.svg" alt="bug" class="h-5">
+                                            <label for="type-bug" class="mx-1  sm:text-sm lg:text-auto">Bug</label>
+                                        </div>
+                                        <input type="checkbox" name="type-bug" id="type-bug" class="pk-type ml-3 lg:mx-2" value="bug">
+                                    </div> 
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex"> 
+                                            <img src="assets/images/pokeTypes/dark.svg" alt="dark" class="h-5">
+                                            <label for="type-dark" class="mx-1">Dark</label>
+                                        </div>
+                                        <input type="checkbox" name="type-dark" id="type-dark" class="pk-type ml-3 lg:mx-2" value="dark">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-dark">Dark</label>
-                                        <input type="checkbox" name="type-dark" id="type-dark" class="pk-type mx-2" value="dark">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/dragon.svg" alt="dragon" class="h-5">
+                                            <label for="type-dragon" class="mx-1">Dragon</label>
+                                        </div>   
+                                        <input type="checkbox" name="type-dragon" id="type-dragon" class="pk-type ml-3 lg:mx-2" value="dragon">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-dragon">Dragon</label>
-                                        <input type="checkbox" name="type-dragon" id="type-dragon" class="pk-type mx-2" value="dragon">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/electric.svg" alt="electric" class="h-5">
+                                            <label for="type-electric" class="mx-1">Electric</label>
+                                        </div>
+                                        <input type="checkbox" name="type-electric" id="type-electric" class="pk-type ml-3 lg:mx-2" value="electric">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-electric">Electric</label>
-                                        <input type="checkbox" name="type-electric" id="type-electric" class="pk-type mx-2" value="electric">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex"> 
+                                            <img src="assets/images/pokeTypes/fairy.svg" alt="fairy" class="h-5">
+                                            <label for="type-fairy" class="mx-1">Fairy</label>
+                                        </div>
+                                        <input type="checkbox" name="type-fairy" id="type-fairy" class="pk-type ml-3 lg:mx-2" value="fairy">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-fairy">Fairy</label>
-                                        <input type="checkbox" name="type-fairy" id="type-fairy" class="pk-type mx-2" value="fairy">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-fighting">Fighting</label>
-                                        <input type="checkbox" name="type-fighting" id="type-fighting" class="pk-type mx-2" value="fighting">
-                                    </div>
-                                </div>
-                                <div class="flex flex-col items-start">
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-fire">Fire</label>
-                                        <input type="checkbox" name="type-fire" id="type-fire" class="pk-type mx-2" value="fire">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-flying">Flying</label>
-                                        <input type="checkbox" name="type-flying" id="type-flying" class="pk-type mx-2" value="flying">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-ghost">Ghost</label>
-                                        <input type="checkbox" name="type-ghost" id="type-ghost" class="pk-type mx-2" value="ghost">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-grass">Grass</label>
-                                        <input type="checkbox" name="type-grass" id="type-grass" class="pk-type mx-2" value="grass">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-ground">Ground</label>
-                                        <input type="checkbox" name="type-ground" id="type-ground" class="pk-type mx-2" value="ground">
-                                    </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-ice">Ice</label>
-                                        <input type="checkbox" name="type-ice" id="type-ice" class="pk-type mx-2" value="ice">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/fighting.svg" alt="fighting" class="h-5">
+                                            <label for="type-fighting" class="mx-1">Fighting</label>
+                                        </div>
+                                        <input type="checkbox" name="type-fighting" id="type-fighting" class="pk-type ml-3 lg:mx-2" value="fighting">
                                     </div>
                                 </div>
-                                <div class="flex flex-col items-start">
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-normal">Normal</label>
-                                        <input type="checkbox" name="type-normal" id="type-normal" class="pk-type mx-2" value="normal">
+                                <div class="flex flex-col items-start mx-2">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/fire.svg" alt="fire" class="h-5">
+                                            <label for="type-fire" class="mx-1">Fire</label>
+                                        </div>
+                                        <input type="checkbox" name="type-fire" id="type-fire" class="pk-type ml-3 lg:mx-2" value="fire">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-poison">Poison</label>
-                                        <input type="checkbox" name="type-poison" id="type-poison" class="pk-type mx-2" value="poison">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/flying.svg" alt="flying" class="h-5">
+                                            <label for="type-flying" class="mx-1">Flying</label>
+                                        </div>
+                                        <input type="checkbox" name="type-flying" id="type-flying" class="pk-type ml-3 lg:mx-2" value="flying">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-psychic">Psychic</label>
-                                        <input type="checkbox" name="type-psychic" id="type-psychic" class="pk-type mx-2" value="psychic">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/ghost.svg" alt="ghost" class="h-5">
+                                            <label for="type-ghost" class="mx-1">Ghost</label>
+                                        </div>                                       
+                                        <input type="checkbox" name="type-ghost" id="type-ghost" class="pk-type ml-3 lg:mx-2" value="ghost">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-rock">Rock</label>
-                                        <input type="checkbox" name="type-rock" id="type-rock" class="pk-type mx-2" value="rock">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/grass.svg" alt="grass" class="h-5">
+                                            <label for="type-grass" class="mx-1">Grass</label>
+                                        </div>
+                                        <input type="checkbox" name="type-grass" id="type-grass" class="pk-type ml-3 lg:mx-2" value="grass">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-steel">Steel</label>
-                                        <input type="checkbox" name="type-steel" id="type-steel" class="pk-type mx-2" value="steel">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex"> 
+                                            <img src="assets/images/pokeTypes/ground.svg" alt="ground" class="h-5">
+                                            <label for="type-ground" class="mx-1">Ground</label>
+                                        </div>
+                                        <input type="checkbox" name="type-ground" id="type-ground" class="pk-type ml-3 lg:mx-22" value="ground">
                                     </div>
-                                    <div class="flex w-full justify-between">
-                                        <label for="type-water">Water</label>
-                                        <input type="checkbox" name="type-water" id="type-water" class="pk-type mx-2" value="water">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/ice.svg" alt="ice" class="h-5">
+                                            <label for="type-ice" class="mx-1">Ice</label>
+                                        </div>
+                                        <input type="checkbox" name="type-ice" id="type-ice" class="pk-type ml-3 lg:mx-2" value="ice">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-start ml-2">
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/normal.svg" alt="normal" class="h-5">
+                                            <label for="type-normal" class="mx-1">Normal</label>
+                                        </div>
+                                        <input type="checkbox" name="type-normal" id="type-normal" class="pk-type ml-3 lg:mx-2" value="normal">
+                                    </div>
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex"> 
+                                            <img src="assets/images/pokeTypes/poison.svg" alt="poison" class="h-5">
+                                            <label for="type-poison" class="mx-1">Poison</label>
+                                        </div>
+                                        <input type="checkbox" name="type-poison" id="type-poison" class="pk-type ml-3 lg:mx-2" value="poison">
+                                    </div>
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/psychic.svg" alt="psychic" class="h-5">
+                                            <label for="type-psychic" class="mx-1">Psychic</label>  
+                                        </div>
+                                        <input type="checkbox" name="type-psychic" id="type-psychic" class="pk-type ml-3 lg:mx-2" value="psychic">
+                                    </div>
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/rock.svg" alt="rock" class="h-5">
+                                            <label for="type-rock" class="mx-1">Rock</label>
+                                        </div>
+                                        <input type="checkbox" name="type-rock" id="type-rock" class="pk-type ml-3 lg:mx-2" value="rock">
+                                    </div>
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/steel.svg" alt="steel" class="h-5">
+                                            <label for="type-steel" class="mx-1">Steel</label>
+                                        </div>
+                                        <input type="checkbox" name="type-steel" id="type-steel" class="pk-type ml-3 lg:mx-2" value="steel">
+                                    </div>
+                                    <div class="flex w-full justify-between my-1">
+                                        <div class="flex">
+                                            <img src="assets/images/pokeTypes/water.svg" alt="water" class="h-5">
+                                            <label for="type-water" class="mx-1">Water</label>
+                                        </div>
+                                        <input type="checkbox" name="type-water" id="type-water" class="pk-type ml-3 lg:mx-2" value="water">
                                     </div>
                                 </div>
                             </div>

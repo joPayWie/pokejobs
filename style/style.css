@@ -1,5 +1,4 @@
 /* FONTS */
-
 @font-face {
   font-family: retroPoke;
   src: url(../assets/fonts/pokemonClassic.ttf);
@@ -26,7 +25,6 @@
 }
 
 /* GENERAL STYLES*/
-
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -50,7 +48,6 @@ body {
 }
 
 /* NAVBAR */
-
 .yellow-header {
   box-shadow: rgba(66, 40, 0, 0.3) 4px 4px 0 0;
 }
@@ -69,10 +66,7 @@ body {
   font-family: sprites2;
 }
 
-/* #sprite4 { font-family: sprites2; } */
-
 /* HERO */
-
 .hero-text {
   font-family: "Poppins", sans-serif;
 }
@@ -155,7 +149,6 @@ body {
 }
 
 /* SEARCH BANNER */
-
 .search-button::before {
   content: '<i class="fa-solid fa-magnifying-glass"></i>';
 }
@@ -192,7 +185,7 @@ body {
   }
 }
 
-/* MODAL ADD A JOB */
+/* MODAL ADD/EDIT A JOB */
 #container-modal {
   z-index: 3;
 }
@@ -201,10 +194,6 @@ body {
   .window-modal {
     overflow-y: auto;
   }
-}
-
-.error-modal {
-  border: red 2px solid;
 }
 
 /* FOOTER */
