@@ -3,174 +3,189 @@
 GENERAL
 ----------------------------------------------------------------------------
 */
-const $ = (selector) => document.querySelector(selector)
-const $$ = (selector) => document.querySelectorAll(selector)
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
-const putInUpperCase = (location) => location.charAt(0).toUpperCase() + location.slice(1)
+const putInUpperCase = (location) =>
+  location.charAt(0).toUpperCase() + location.slice(1);
 
-const typeCheckboxes = $$(".pk-type") 
+const typeCheckboxes = $$(".pk-type");
 
 const maxThreeTypes = () => {
-    let checkedArr = []
-    for (const checkbox of typeCheckboxes) {
-        if (checkbox.checked && checkedArr.length < 3) {
-            checkedArr.push(checkbox.value)
-        }
-    } return checkedArr
-}
+  let checkedArr = [];
+  for (const checkbox of typeCheckboxes) {
+    if (checkbox.checked && checkedArr.length < 3) {
+      checkedArr.push(checkbox.value);
+    }
+  }
+  return checkedArr;
+};
 /* 
 ----------------------------------------------------------------------------
 API fetching
 ----------------------------------------------------------------------------
 */
 // get pokejobs
-const getPokeJobs = async (jobId = '') => {
-    const response = await fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`)
-    const jobs = await response.json()
-    return jobs
-}
+const getPokeJobs = async (jobId = "") => {
+  const response = await fetch(
+    `https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`
+  );
+  const jobs = await response.json();
+  return jobs;
+};
 
-getPokeJobs().then(data => renderPokeJobs(data)).catch(() => alert(`Sorry, database is not available at the time :(`))
+getPokeJobs()
+  .then((data) => renderPokeJobs(data))
+  .catch(() => alert(`Sorry, database is not available at the time :(`));
 
 // post pokejob
 const createNewJob = () => {
-    return {
-        "name": $("#addjob-name").value,
-        "description": $("#addjob-description").value,
-        "location": $("#addjob-location").value,
-        "pkType": maxThreeTypes(),
-        "level": $("#addjob-level").value,
-        "email": $("#addjob-email").value
-    }
-}
+  return {
+    name: $("#addjob-name").value,
+    description: $("#addjob-description").value,
+    location: $("#addjob-location").value,
+    pkType: maxThreeTypes(),
+    level: $("#addjob-level").value,
+    email: $("#addjob-email").value,
+  };
+};
 
 const postPokeJob = async () => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs`, {
+  fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs`, {
     method: "POST",
     headers: {
-        'Content-Type': 'Application/json'
+      "Content-Type": "Application/json",
     },
-    body: JSON.stringify(createNewJob())
-    }).finally(() => window.location.href = "index.html")
-}
+    body: JSON.stringify(createNewJob()),
+  }).finally(() => (window.location.href = "index.html"));
+};
 
 const deletePokeJob = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
-    method: "DELETE"
-    }).finally(() => window.location.href = "index.html")
-}
+  fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
+    method: "DELETE",
+  }).finally(() => (window.location.href = "index.html"));
+};
 
 // put
-const editPokeJob  = async (jobId) => {
-    fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
+const editPokeJob = async (jobId) => {
+  fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "PUT",
     headers: {
-        'Content-Type': 'Application/json'
+      "Content-Type": "Application/json",
     },
-    body: JSON.stringify(createNewJob())
-    }).finally(() => window.location.href = "index.html")
-}
+    body: JSON.stringify(createNewJob()),
+  }).finally(() => (window.location.href = "index.html"));
+};
 /* 
 ----------------------------------------------------------------------------
 FILTERS
 ----------------------------------------------------------------------------
 */
 const filterByName = (pokeJobs, nameSearched) => {
-    return pokeJobs.filter(pokeJob => {
-        let pkJobName = pokeJob.name.toLowerCase()
-        pkJobName = pkJobName.split(' ')
-        for (let i = 0; i < pkJobName.length; i++) {
-            let eachWord = pkJobName[i]
-            for (let  j = 0; j < eachWord.length; j++) {
-                if (eachWord.includes(nameSearched.toLowerCase())) {
-                    return pokeJob
-                }
-            }
+  return pokeJobs.filter((pokeJob) => {
+    let pkJobName = pokeJob.name.toLowerCase();
+    pkJobName = pkJobName.split(" ");
+    for (let i = 0; i < pkJobName.length; i++) {
+      let eachWord = pkJobName[i];
+      for (let j = 0; j < eachWord.length; j++) {
+        if (eachWord.includes(nameSearched.toLowerCase())) {
+          return pokeJob;
         }
-    })
-}
+      }
+    }
+  });
+};
 
-const filterByLocation = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
-      return pokeJob.location === value })
+const filterByLocation = (pokeJobs, value) =>
+  pokeJobs.filter((pokeJob) => {
+    return pokeJob.location === value;
+  });
 
-const filterByType = (pokeJobs, value) => pokeJobs.filter(pokeJob => {
-        return pokeJob.pkType.includes(value) })
+const filterByType = (pokeJobs, value) =>
+  pokeJobs.filter((pokeJob) => {
+    return pokeJob.pkType.includes(value);
+  });
 
-const filterByLevel = (pokeJobs) => pokeJobs.filter(pokeJob => {
-        return pokeJob.level <= $("#search-level").value })
+const filterByLevel = (pokeJobs) =>
+  pokeJobs.filter((pokeJob) => {
+    return pokeJob.level <= parseInt($("#search-level").value);
+  });
 
 const filterJobs = (data) => {
-    let arrayFiltered = data
-    if ($("#search-name").value !== '') {
-        arrayFiltered = filterByName(arrayFiltered, $("#search-name").value)
-    }
-    if ($("#search-location").value !== 'all') {
-        arrayFiltered = filterByLocation(arrayFiltered, $("#search-location").value)
-    }
-    if ($("#search-type").value !== 'all') {    
-        arrayFiltered = filterByType(arrayFiltered, $("#search-type").value)
-    }
-    if ($("#search-level").value !== 'all') {
-        arrayFiltered = filterByLevel(arrayFiltered)
-    }
-    return arrayFiltered
-}
+  let arrayFiltered = data;
+  if ($("#search-name").value !== "") {
+    arrayFiltered = filterByName(arrayFiltered, $("#search-name").value);
+  }
+  if ($("#search-location").value !== "all") {
+    arrayFiltered = filterByLocation(
+      arrayFiltered,
+      $("#search-location").value
+    );
+  }
+  if ($("#search-type").value !== "all") {
+    arrayFiltered = filterByType(arrayFiltered, $("#search-type").value);
+  }
+  if ($("#search-level").value !== "all") {
+    arrayFiltered = filterByLevel(arrayFiltered);
+  }
+  return arrayFiltered;
+};
 /* 
 ----------------------------------------------------------------------------
 DOM
 ----------------------------------------------------------------------------
 */
-const hideElement = (selector) => selector.classList.add("hidden")
-const unHideElement = (selector) => selector.classList.remove("hidden")
+const hideElement = (selector) => selector.classList.add("hidden");
+const unHideElement = (selector) => selector.classList.remove("hidden");
 
 const cleanPkTypes = () => {
-    for (const checkbox of typeCheckboxes) {
-        checkbox.checked = false
-        checkbox.removeAttribute("disabled")
-    }
-}
+  for (const checkbox of typeCheckboxes) {
+    checkbox.checked = false;
+    checkbox.removeAttribute("disabled");
+  }
+};
 
-const jobContainer = $("#job-container")
+const jobContainer = $("#job-container");
 
-const cleanJobContainer = () => jobContainer.innerHTML = ''
+const cleanJobContainer = () => (jobContainer.innerHTML = "");
 
 // Edit pokejob functionality
 const insideEditPkJob = (name, description, location, level, email, pkType) => {
-    hideElement($("#btns-addmodal"))
-    hideElement($("#addpkjob-title"))
-    unHideElement($("#editpkjob-title"))
-    unHideElement($("#btns-editmodal"))
-    unHideElement($("#container-modal"))
-    cleanPkTypes()
-    $("#addjob-name").value = name
-    $("#addjob-description").value = description
-    $("#addjob-location").value = location
-    $("#addjob-level").value = level
-    $("#addjob-email").value = email
-    for (let type of typeCheckboxes) {
-        for (let i = 0; i < pkType.length; i++) {
-            if (pkType[i] === type.value) {
-                type.checked = true
-            } 
-        } 
+  hideElement($("#btns-addmodal"));
+  hideElement($("#addpkjob-title"));
+  unHideElement($("#editpkjob-title"));
+  unHideElement($("#btns-editmodal"));
+  unHideElement($("#container-modal"));
+  cleanPkTypes();
+  $("#addjob-name").value = name;
+  $("#addjob-description").value = description;
+  $("#addjob-location").value = location;
+  $("#addjob-level").value = level;
+  $("#addjob-email").value = email;
+  for (const type of typeCheckboxes) {
+    for (let i = 0; i < pkType.length; i++) {
+      if (pkType[i] === type.value) {
+        type.checked = true;
+      }
     }
-    for (let type of typeCheckboxes) {
-        if (maxThreeTypes().length === 3 && type.checked === false) {
-            type.setAttribute("disabled", '')
-        }
+  }
+  for (const type of typeCheckboxes) {
+    if (maxThreeTypes().length === 3 && type.checked === false) {
+      type.setAttribute("disabled", "");
     }
-}
+  }
+};
 
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
-    jobContainer.innerHTML = `
+  jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
-    </div>`
-    const afterTimeOut = () => {
-        const { id, name, pkType, description, location, level, email } = pkJob
-        cleanJobContainer()
-        jobContainer.innerHTML = `
+    </div>`;
+  const afterTimeOut = () => {
+    const { id, name, pkType, description, location, level, email } = pkJob;
+    cleanJobContainer();
+    jobContainer.innerHTML = `
             <div class="flex flex-col md:flex-row justify-center w-full">
                 <div class="self-center">
                     <button id="go-back-arrow">
@@ -180,12 +195,20 @@ const renderSelectedPkJob = (pkJob) => {
                 <div class="w-full md:w-2/5 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
                     <h2 class="font-semibold text-lg">${name}</h2>
                     <div class="flex">
-                        <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
-                        <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
-                        <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+                        <img src="assets/images/pokeTypes/${
+                          pkType[0]
+                        }.svg" alt="${pkType}" class="h-12 mx-1">
+                        <img src="assets/images/pokeTypes/${
+                          pkType[1] ? pkType[1] : "notype"
+                        }.svg" class="h-12 mx-1">
+                        <img src="assets/images/pokeTypes/${
+                          pkType[2] ? pkType[2] : "notype"
+                        }.svg" class="h-12 mx-1">
                     </div>
                     <p><strong>Description: </strong>${description}</p>
-                    <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
+                    <span><strong>Location: </strong>${putInUpperCase(
+                      location
+                    )}</span><br>
                     <span><strong>Level required: </strong>${level}</span><br>
                     <address><small><strong>Contact: </strong>${email}</small></address>
                     <div class="flex">
@@ -196,163 +219,237 @@ const renderSelectedPkJob = (pkJob) => {
                     </div>
                 </div>
             </div>
-            `
-            $("#unhideDelete").addEventListener("click", () => {
-                unHideElement($("#are-u-sure"))
-            })
-            $("#hideDelete").addEventListener("click", () => {
-                hideElement($("#are-u-sure"))
-            })
-            $("#go-back-arrow").addEventListener("click", () => {
-                getPokeJobs().then(data => renderPokeJobs(filterJobs(data))).catch(() => alert(`Sorry, database is not available at the time :(`))
-            })
-            $("#edit-job").addEventListener("click", () => {
-                insideEditPkJob(name, description, location, level, email, pkType)
-        })
-        $("#modal-btn-save").setAttribute("job-id", id)
-    }
-    window.setTimeout(afterTimeOut, 1500)
-}
+            `;
+    $("#unhideDelete").addEventListener("click", () => {
+      unHideElement($("#are-u-sure"));
+    });
+    $("#hideDelete").addEventListener("click", () => {
+      hideElement($("#are-u-sure"));
+    });
+    $("#go-back-arrow").addEventListener("click", () => {
+      getPokeJobs()
+        .then((data) => renderPokeJobs(filterJobs(data)))
+        .catch(() => alert(`Sorry, database is not available at the time :(`));
+    });
+    $("#edit-job").addEventListener("click", () => {
+      insideEditPkJob(name, description, location, level, email, pkType);
+    });
+    $("#modal-btn-save").setAttribute("job-id", id);
+  };
+  window.setTimeout(afterTimeOut, 1500);
+};
 
 // Show pokéjobs
 const renderPokeJobs = (pokeJobs) => {
-    cleanJobContainer()
-    if (pokeJobs.length !== 0) {
-        for (const { id, name, description, location, pkType, level } of pokeJobs) {
-            jobContainer.innerHTML += ` 
-            <div class="w-full md:w-1/4 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
+  cleanJobContainer();
+  if (pokeJobs.length !== 0) {
+    for (const { id, name, description, location, pkType, level } of pokeJobs) {
+      jobContainer.innerHTML += ` 
+            <div class="w-full md:w-2/6 lg:w-1/4 bg-white text-black rounded p-3 my-3 md:m-3">
                 <h2 class="font-semibold text-lg">${name}</h2>
                 <div class="flex">
-                    <img src="assets/images/pokeTypes/${pkType[0]}.svg" alt="${pkType}" class="h-12 mx-1">
-                    <img src="assets/images/pokeTypes/${pkType[1] ? pkType[1] : 'notype'}.svg" class="h-12 mx-1">
-                    <img src="assets/images/pokeTypes/${pkType[2] ? pkType[2] : 'notype'}.svg" class="h-12 mx-1">
+                    <img src="assets/images/pokeTypes/${
+                      pkType[0]
+                    }.svg" alt="${pkType}" class="h-12 mx-1 h-8">
+                    <img src="assets/images/pokeTypes/${
+                      pkType[1] ? pkType[1] : "notype"
+                    }.svg" class="h-12 mx-1 h-8">
+                    <img src="assets/images/pokeTypes/${
+                      pkType[2] ? pkType[2] : "notype"
+                    }.svg" class="h-12 mx-1 h-8">
                 </div>
                 <p><strong>Description: </strong>${description}</p>
-                <span><strong>Location: </strong>${putInUpperCase(location)}</span><br>
+                <span><strong>Location: </strong>${putInUpperCase(
+                  location
+                )}</span><br>
                 <span><strong>Level required: </strong>${level}</span><br>
-                <button class="details-btn text-xs flex items-center bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
+                <button class="details-btn flex items-center justify-center w-full bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
             </div>
-            `
-            for (const btn of $$(".details-btn")) {
-                btn.addEventListener("click", () => {
-                    let jobId = btn.getAttribute("job-id")
-                    getPokeJobs(jobId).then(data => renderSelectedPkJob(data)).catch(() => alert(`Sorry, database is not available at the time :(`))
-                })
-            } 
-        }
+            `;
+      for (const btn of $$(".details-btn")) {
+        btn.addEventListener("click", () => {
+          let jobId = btn.getAttribute("job-id");
+          getPokeJobs(jobId)
+            .then((data) => renderSelectedPkJob(data))
+            .catch(() =>
+              alert(`Sorry, database is not available at the time :(`)
+            );
+        });
+      }
     }
-    else {
-        jobContainer.innerHTML = `
+  } else {
+    jobContainer.innerHTML = `
         <div class="flex flex-col items-center text-[#FEDF63] font-semibold p-3">
             <h2 class="text-xl"> Sorry! We haven't found any pokéjob for this search. </h2>
             <p class="mt-2"> Please, try another filter selection </p>
             <img src="./assets/images/clefa.png" alt="clefairy" width="200px" class="mt-2"> 
-        </div>`
-    }       
-}
+        </div>`;
+  }
+};
 
 // Search jobs
 $("#search-button").addEventListener("click", (e) => {
-    e.preventDefault()
-    jobContainer.innerHTML = `
+  e.preventDefault();
+  jobContainer.innerHTML = `
     <div>
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
-    </div>`
-    getPokeJobs().then(data => renderPokeJobs(filterJobs(data)))
-})
+    </div>`;
+  getPokeJobs().then((data) => renderPokeJobs(filterJobs(data)));
+});
 
 $("#clear-button").addEventListener("click", (e) => {
-    e.preventDefault()
-    $("#search-form").reset()
-})
+  e.preventDefault();
+  $("#search-form").reset();
+  getPokeJobs().then((data) => renderPokeJobs(data));
+});
 
 // Pkmn sprites in menu
-const pokeLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 1, 2, 3, 4, 5, 6, 7];
+const pokeLetters = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+];
 
 const getRandomChar = (pokeArray) => {
-    let randomIndex = Math.floor(Math.random() * pokeArray.length)
-    let randomSelection = pokeArray[randomIndex];
-    return randomSelection  
-}
+  let randomIndex = Math.floor(Math.random() * pokeArray.length);
+  let randomSelection = pokeArray[randomIndex];
+  return randomSelection;
+};
 
 const showRandomPkmn = () => {
-    for (let sprite of $$(".sprites")) {
-        sprite.innerHTML = `${getRandomChar(pokeLetters)}`
-    } 
-}
+  for (const sprite of $$(".sprites")) {
+    sprite.innerHTML = `${getRandomChar(pokeLetters)}`;
+  }
+};
 
-showRandomPkmn()
+showRandomPkmn();
 
 // Modal add job
-for (const btn of $$(".add-job-link")) { 
-    btn.addEventListener("click", () => {
-        unHideElement($("#btns-addmodal"))
-        unHideElement($("#addpkjob-title"))
-        hideElement($("#editpkjob-title"))
-        hideElement($("#btns-editmodal"))
-        $("#new-pkjob").reset()
-        cleanPkTypes()
-        unHideElement($("#container-modal"))
-    })
+for (const btn of $$(".add-job-link")) {
+  btn.addEventListener("click", () => {
+    unHideElement($("#btns-addmodal"));
+    unHideElement($("#addpkjob-title"));
+    hideElement($("#editpkjob-title"));
+    hideElement($("#btns-editmodal"));
+    $("#new-pkjob").reset();
+    cleanPkTypes();
+    unHideElement($("#container-modal"));
+  });
 }
 
 for (const cancelBtn of $$(".modal-btn-cancel")) {
-    cancelBtn.addEventListener("click", (e) => {
-        e.preventDefault()
-        hideElement($("#container-modal"))
-    })
-}   
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    hideElement($("#container-modal"));
+  });
+}
 
 // Modal checkboxes
 for (const checkbox of typeCheckboxes) {
-    checkbox.addEventListener("change", () => {
-        if ( maxThreeTypes().length === 3 ) {
-            for (const checkbox of typeCheckboxes) {
-                if (!checkbox.checked) {
-                    checkbox.setAttribute("disabled", '')
-                }
-            }
-        } else {
-            for (const checkbox of typeCheckboxes) {
-                checkbox.removeAttribute("disabled", '')
-            }
+  checkbox.addEventListener("change", () => {
+    if (maxThreeTypes().length === 3) {
+      for (const checkbox of typeCheckboxes) {
+        if (!checkbox.checked) {
+          checkbox.setAttribute("disabled", "");
         }
-    })
+      }
+    } else {
+      for (const checkbox of typeCheckboxes) {
+        checkbox.removeAttribute("disabled", "");
+      }
+    }
+  });
 }
 
 // Modal posting pokejob
 $("#new-pkjob").addEventListener("submit", (e) => {
-    e.preventDefault()
-    if (maxThreeTypes().length === 0) {
-            $("#choose-pktype").innerHTML = ''
-            $("#choose-pktype").style.color = "red"
-            return $("#choose-pktype").innerHTML = 'Please choose at least one poké-type'
-    }
-     else {
-        postPokeJob()
-        hideElement($("#container-modal")) 
-    }
-}) 
+  e.preventDefault();
+  if (maxThreeTypes().length === 0) {
+    $("#choose-pktype").innerHTML = "";
+    $("#choose-pktype").style.color = "red";
+    return ($("#choose-pktype").innerHTML =
+      "Please choose at least one poké-type");
+  } else {
+    postPokeJob();
+    hideElement($("#container-modal"));
+  }
+});
 
 for (const checkbox of typeCheckboxes) {
-    checkbox.addEventListener("change", () => {
-        $("#choose-pktype").innerHTML = ''
-        $("#choose-pktype").style.color = "#035A9A"
-        $("#choose-pktype").innerHTML = 'You can choose up to 3 types'
-    })
+  checkbox.addEventListener("change", () => {
+    $("#choose-pktype").innerHTML = "";
+    $("#choose-pktype").style.color = "#035A9A";
+    $("#choose-pktype").innerHTML = "You can choose up to 3 types";
+  });
 }
 
 // Modal editing pkjob
 $("#modal-btn-save").addEventListener("click", (e) => {
-    e.preventDefault()
-    const jobId = $("#modal-btn-save").getAttribute("job-id")
-    getPokeJobs().then(() => editPokeJob(jobId))
-})
+  e.preventDefault();
+  const jobId = $("#modal-btn-save").getAttribute("job-id");
+  getPokeJobs().then(() => editPokeJob(jobId));
+});
 
 // Burger menu
 $(".mobile-menu-button").addEventListener("click", () => {
-    showRandomPkmn()
-    $(".mobile-menu").classList.toggle("hidden");
-    $("#burger-icon-lines").classList.toggle("hidden")
-    $("#burger-icon-xmark").classList.toggle("hidden")
-})
+  showRandomPkmn();
+  $(".mobile-menu").classList.toggle("hidden");
+  $("#burger-icon-lines").classList.toggle("hidden");
+  $("#burger-icon-xmark").classList.toggle("hidden");
+});

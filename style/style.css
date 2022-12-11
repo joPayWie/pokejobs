@@ -1,102 +1,157 @@
 /* FONTS */
+@font-face {
+  font-family: retroPoke;
+  src: url(../assets/fonts/pokemonClassic.ttf);
+}
 
-@font-face { font-family: retroPoke; src: url(../assets/fonts/pokemonClassic.ttf); }
+@font-face {
+  font-family: sprites1;
+  src: url(../assets/fonts/pokpix.ttf);
+}
 
-@font-face { font-family: sprites1; src: url(../assets/fonts/pokpix.ttf); }
+@font-face {
+  font-family: sprites2;
+  src: url(../assets/fonts/poxpix2.ttf);
+}
 
-@font-face { font-family: sprites2; src: url(../assets/fonts/poxpix2.ttf); }
+@font-face {
+  font-family: julietta;
+  src: url(../assets/fonts/messie.otf);
+}
 
-@font-face { font-family: julietta; src: url(../assets/fonts/messie.otf); }
-
-@font-face { font-family: remachine; src: url(../assets/fonts/RemachineScript_Personal_Use.ttf); }
+@font-face {
+  font-family: remachine;
+  src: url(../assets/fonts/RemachineScript_Personal_Use.ttf);
+}
 
 /* GENERAL STYLES*/
+body {
+  font-family: "Poppins", sans-serif;
+}
 
-body { font-family: 'Poppins', sans-serif; }
-
-*::-webkit-scrollbar{
+*::-webkit-scrollbar {
   width: 16px;
 }
 
-*::-webkit-scrollbar-thumb{
-  background-color:#005E5C;
+*::-webkit-scrollbar-thumb {
+  background-color: #005e5c;
   border-radius: 10px;
   border: 2px solid white;
 }
 
-*::-webkit-scrollbar-thumb:active{
-  background-color:#004746;
+*::-webkit-scrollbar-thumb:active {
+  background-color: #004746;
 }
 
-*::-webkit-scrollbar-track{
+*::-webkit-scrollbar-track {
   background: white;
 }
 
 /* NAVBAR */
+.yellow-header {
+  box-shadow: rgba(66, 40, 0, 0.3) 4px 4px 0 0;
+}
 
-.yellow-header { box-shadow: rgba(66, 40, 0, .3) 4px 4px 0 0; }
+.retro-font {
+  font-family: retroPoke;
+}
 
-.retro-font { font-family: retroPoke; }
+#sprite1,
+#sprite3 {
+  font-family: sprites1;
+}
 
-#sprite1, #sprite3 { font-family: sprites1; }
-
-#sprite2, #sprite4 { font-family: sprites2; }
-
-
-/* #sprite4 { font-family: sprites2; } */
-
+#sprite2,
+#sprite4 {
+  font-family: sprites2;
+}
 
 /* HERO */
-
-.hero-text { font-family: 'Poppins', sans-serif; }
-
-.free { font-family: julietta ; font-size: 3.5rem; color: white; }
-
-.fixed-img { margin: 0px; background-color: rgb(75, 196, 75); position: relative; }
-
-.fixed-img::before{
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .4;
-    background-image: url(../assets/images/pokemon2.png);
-    background-repeat: no-repeat;
-    background-position-y: bottom;
-    background-attachment: fixed;
-    background-size: cover;
+.hero-text {
+  font-family: "Poppins", sans-serif;
 }
 
-@media(max-width: 768px) {
-  .fixed-img::before { background-size: auto; }
+.free {
+  font-family: julietta;
+  font-size: 3.5rem;
+  color: white;
 }
 
-.pattern { position: absolute; z-index: -3; color:rgba(230, 214, 0, 0.31); }
-
-.hero-welcome { position: relative; z-index: 2; font-size: 2.75rem; }
-
-.hero-welcome h2 {  text-shadow: 4px 1px 2px rgba(0,0,0,0.23); }
-
-@media(max-width: 768px) {
-    .free-hero { font-size: 2.75rem; }
+.fixed-img {
+  margin: 0px;
+  background-color: rgb(75, 196, 75);
+  position: relative;
 }
 
-@media(max-width: 1024px) and (orientation: landscape) {
-  .chikorita { display: none; }
+.fixed-img::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background-image: url(../assets/images/pokemon2.png);
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-@media(max-width: 1180px) and (orientation: landscape) {
-  .search-params { margin: 0 2px; }
-  .chikorita { height: 13rem !important; } 
+@media (max-width: 768px) {
+  .fixed-img::before {
+    background-size: auto;
+  }
 }
 
+.pattern {
+  position: absolute;
+  z-index: -3;
+  color: rgba(230, 214, 0, 0.31);
+}
 
-/* SEARCH BANNER */ 
+.hero-welcome {
+  position: relative;
+  z-index: 2;
+  font-size: 2.75rem;
+}
 
-.search-button::before { content: '<i class="fa-solid fa-magnifying-glass"></i>'; }
+.hero-welcome h2 {
+  text-shadow: 4px 1px 2px rgba(0, 0, 0, 0.23);
+}
+
+@media (max-width: 768px) {
+  .free-hero {
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 1262px) and (min-width: 1025px) {
+  .chikorita-container {
+    display: none;
+  }
+}
+
+@media (max-width: 1025px) and (orientation: landscape) {
+  .chikorita-container {
+    display: none;
+  }
+}
+
+@media (max-width: 1180px) and (orientation: landscape) {
+  .search-params {
+    margin: 0 2px;
+  }
+  .chikorita {
+    height: 13rem !important;
+  }
+}
+
+/* SEARCH BANNER */
+.search-button::before {
+  content: '<i class="fa-solid fa-magnifying-glass"></i>';
+}
 
 .banner-btns {
   background-color: #fbeee0;
@@ -114,9 +169,14 @@ body { font-family: 'Poppins', sans-serif; }
   touch-action: manipulation;
 }
 
-.banner-btns:hover { background-color: #fff; }
+.banner-btns:hover {
+  background-color: #fff;
+}
 
-.banner-btns:active { box-shadow: #422800 2px 2px 0 0; transform: translate(2px, 2px); }
+.banner-btns:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
 
 @media (min-width: 768px) {
   .banner-btns {
@@ -125,32 +185,51 @@ body { font-family: 'Poppins', sans-serif; }
   }
 }
 
-/* MODAL ADD A JOB */
-#container-modal { z-index: 3; }
+/* MODAL ADD/EDIT A JOB */
+#container-modal {
+  z-index: 3;
+}
 
-@media(max-width: 350px) {
+@media (max-width: 350px) {
   .window-modal {
     overflow-y: auto;
   }
 }
 
-.error-modal { border: red 2px solid; }
-
 /* FOOTER */
-.footer-icons { background-color: transparent; border-radius: 30px; border: rgb(253 224 71) 1px solid;}
+.footer-icons {
+  background-color: transparent;
+  border-radius: 30px;
+  border: rgb(253 224 71) 1px solid;
+}
 
-.footer-icons:hover { color: rgb(30 58 138); background: rgb(253 224 71); border: rgb(30 58 138) 1px solid ;}
+.footer-icons:hover {
+  color: rgb(30 58 138);
+  background: rgb(253 224 71);
+  border: rgb(30 58 138) 1px solid;
+}
 
-.build-with { font-family: 'Poppins', sans-serif; color: white; font-size: .8rem; margin-right: 1vw; margin-bottom: 0; align-self: flex-end; }
+.build-with {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  font-size: 0.8rem;
+  margin-right: 1vw;
+  margin-bottom: 0;
+  align-self: flex-end;
+}
 
-.made-jopay { color: #E94560; font-family: remachine; font-weight: 100; font-size: 1.5rem; }
+.made-jopay {
+  color: #e94560;
+  font-family: remachine;
+  font-weight: 100;
+  font-size: 1.5rem;
+}
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   footer {
     margin-top: 1rem;
   }
-  .copyright  {
-    padding: .75rem;
+  .copyright {
+    padding: 0.75rem;
   }
 }
-
