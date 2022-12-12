@@ -18,6 +18,11 @@ const maxThreeTypes = () => {
       checkedArr.push(checkbox.value);
     }
   }
+  for (let i = checkedArr.length - 1; i > 0; i--) {
+    // this arrangement shuffles the array, for avoiding alfabetical order
+    let j = Math.floor(Math.random() * (i + 1));
+    [checkedArr[i], checkedArr[j]] = [checkedArr[j], checkedArr[i]];
+  }
   return checkedArr;
 };
 /* 
@@ -179,7 +184,7 @@ const insideEditPkJob = (name, description, location, level, email, pkType) => {
 // Show details of pokejob
 const renderSelectedPkJob = (pkJob) => {
   jobContainer.innerHTML = `
-    <div>
+    <div class="flex w-full justify-center">
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`;
   const afterTimeOut = () => {
@@ -192,28 +197,31 @@ const renderSelectedPkJob = (pkJob) => {
                         <i class="fa-solid fa-arrow-left text-5xl text-[#FEDF63] mx-3 py-1.5 px-2 footer-icons"></i>
                     <button>
                 </div>
-                <div class="w-full md:w-2/5 bg-white text-black text-sm rounded p-3 my-3 md:m-3">
-                    <h2 class="font-semibold text-lg">${name}</h2>
-                    <div class="flex">
+                <div class="w-full md:w-2/5 bg-white text-black rounded p-3 my-3 md:m-3">
+                    <h2 class="font-semibold text-2xl">${name}</h2>
+                    <div class="my-2"> 
+                      <img src="assets/images/pokeCard/${pkType[0]}.png">
+                    </div>
+                    <div class="flex mt-2">
                         <img src="assets/images/pokeTypes/${
                           pkType[0]
-                        }.svg" alt="${pkType}" class="h-12 mx-1">
+                        }.svg" alt="${pkType}" class="h-10 mx-1">
                         <img src="assets/images/pokeTypes/${
                           pkType[1] ? pkType[1] : "notype"
-                        }.svg" class="h-12 mx-1">
+                        }.svg" class="h-10 mx-1">
                         <img src="assets/images/pokeTypes/${
                           pkType[2] ? pkType[2] : "notype"
-                        }.svg" class="h-12 mx-1">
+                        }.svg" class="h-10 mx-1">
                     </div>
-                    <p><strong>Description: </strong>${description}</p>
-                    <span><strong>Location: </strong>${putInUpperCase(
+                    <p class="mb-1"><strong>Description: </strong>${description}</p>
+                    <p class="my-1"><strong>Location: </strong>${putInUpperCase(
                       location
-                    )}</span><br>
-                    <span><strong>Level required: </strong>${level}</span><br>
-                    <address><small><strong>Contact: </strong>${email}</small></address>
+                    )}</p>
+                    <p class="my-1"><strong>Level required: </strong>${level}</p>
+                    <address class="my-1"><strong>Contact: </strong>${email}</address>
                     <div class="flex">
                         <div class="w-1/4">
-                            <button class="text-xs flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="edit-job">Edit</button> <button class="text-xs flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
+                            <button class="flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="edit-job">Edit</button> <button class="flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
                         </div>
                         <span id="are-u-sure" class="flex hidden items-center justify-center self-center font-semibold bg-[#FEDF63] pl-3 py-1 h-1/2 w-3/4">Are you sure? <button class="font-semibold text-green-600 ml-1 px-3 py-1.5 rounded-full hover:bg-[#36A95E] hover:text-[#FEDF63]" onclick="deletePokeJob(${id})">YES</button>/<button class="font-semibold text-red-600 mx-2 px-3 py-1.5 rounded-full hover:bg-[#ED6764] hover:text-[#FEDF63]" id="hideDelete">NO</button></span>
                     </div>
@@ -246,8 +254,19 @@ const renderPokeJobs = (pokeJobs) => {
     for (const { id, name, description, location, pkType, level } of pokeJobs) {
       jobContainer.innerHTML += ` 
             <div class="w-full md:w-2/6 lg:w-1/4 bg-white text-black rounded p-3 my-3 md:m-3">
-                <h2 class="font-semibold text-lg">${name}</h2>
-                <div class="flex">
+                <h2 class="font-semibold text-2xl">${name}</h2>
+                <div class="my-2"> 
+                    <img src="assets/images/pokeCard/${pkType[0]}.png">
+                </div>
+                <p class="mb-1"><strong>Description: </strong>${description}</p>
+                <p class="my-1"><strong>Location: </strong>${putInUpperCase(
+                  location
+                )}</p>
+                <p class="my-1"><strong>Level required: </strong>${level}</p>
+                <div class="flex my-1 items-center">
+                    <p><small><strong>${
+                      pkType.length === 1 ? "Type: " : "Types: "
+                    }</strong></small></p>
                     <img src="assets/images/pokeTypes/${
                       pkType[0]
                     }.svg" alt="${pkType}" class="h-12 mx-1 h-8">
@@ -258,11 +277,6 @@ const renderPokeJobs = (pokeJobs) => {
                       pkType[2] ? pkType[2] : "notype"
                     }.svg" class="h-12 mx-1 h-8">
                 </div>
-                <p><strong>Description: </strong>${description}</p>
-                <span><strong>Location: </strong>${putInUpperCase(
-                  location
-                )}</span><br>
-                <span><strong>Level required: </strong>${level}</span><br>
                 <button class="details-btn flex items-center justify-center w-full bg-[#242424] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]"  job-id="${id}">Details</button>
             </div>
             `;
@@ -291,7 +305,7 @@ const renderPokeJobs = (pokeJobs) => {
 $("#search-button").addEventListener("click", (e) => {
   e.preventDefault();
   jobContainer.innerHTML = `
-    <div>
+    <div class="flex w-full justify-center">
         <img src="./assets/images/spinner.gif" alt="spinner" width="50px">
     </div>`;
   getPokeJobs().then((data) => renderPokeJobs(filterJobs(data)));
