@@ -6,8 +6,7 @@ GENERAL
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 
-const putInUpperCase = (location) =>
-  location.charAt(0).toUpperCase() + location.slice(1);
+const putInUpperCase = (location) => location.charAt(0).toUpperCase() + location.slice(1);
 
 const typeCheckboxes = $$(".pk-type");
 
@@ -19,7 +18,7 @@ const maxThreeTypes = () => {
     }
   }
   for (let i = checkedArr.length - 1; i > 0; i--) {
-    // this arrangement shuffles the array, for avoiding alfabetical order
+    // this arrangement shuffles the array, for avoiding alfabetical order when adding a pokejob
     let j = Math.floor(Math.random() * (i + 1));
     [checkedArr[i], checkedArr[j]] = [checkedArr[j], checkedArr[i]];
   }
@@ -62,13 +61,15 @@ const postPokeJob = async () => {
       "Content-Type": "Application/json",
     },
     body: JSON.stringify(createNewJob()),
-  }).finally(() => (window.location.href = "index.html"));
+  }).catch(() => alert(`Sorry, database is not available at the time :(`))
+    .finally(() => (window.location.href = "index.html"));
 };
 
 const deletePokeJob = async (jobId) => {
   fetch(`https://6372bd9a348e947299fc35f9.mockapi.io/jobs/${jobId}`, {
     method: "DELETE",
-  }).finally(() => (window.location.href = "index.html"));
+  }).catch(() => alert(`Sorry, database is not available at the time :(`))
+    .finally(() => (window.location.href = "index.html"));
 };
 
 // put
@@ -79,7 +80,8 @@ const editPokeJob = async (jobId) => {
       "Content-Type": "Application/json",
     },
     body: JSON.stringify(createNewJob()),
-  }).finally(() => (window.location.href = "index.html"));
+  }).catch(() => alert(`Sorry, database is not available at the time :(`))
+    .finally(() => (window.location.href = "index.html"));
 };
 /* 
 ----------------------------------------------------------------------------
@@ -102,19 +104,13 @@ const filterByName = (pokeJobs, nameSearched) => {
 };
 
 const filterByLocation = (pokeJobs, value) =>
-  pokeJobs.filter((pokeJob) => {
-    return pokeJob.location === value;
-  });
+  pokeJobs.filter((pokeJob) => { return pokeJob.location === value; });
 
 const filterByType = (pokeJobs, value) =>
-  pokeJobs.filter((pokeJob) => {
-    return pokeJob.pkType.includes(value);
-  });
+  pokeJobs.filter((pokeJob) => { return pokeJob.pkType.includes(value); });
 
 const filterByLevel = (pokeJobs) =>
-  pokeJobs.filter((pokeJob) => {
-    return pokeJob.level <= parseInt($("#search-level").value);
-  });
+  pokeJobs.filter((pokeJob) => { return pokeJob.level <= parseInt($("#search-level").value); });
 
 const filterJobs = (data) => {
   let arrayFiltered = data;
@@ -122,10 +118,7 @@ const filterJobs = (data) => {
     arrayFiltered = filterByName(arrayFiltered, $("#search-name").value);
   }
   if ($("#search-location").value !== "all") {
-    arrayFiltered = filterByLocation(
-      arrayFiltered,
-      $("#search-location").value
-    );
+    arrayFiltered = filterByLocation(arrayFiltered,$("#search-location").value);
   }
   if ($("#search-type").value !== "all") {
     arrayFiltered = filterByType(arrayFiltered, $("#search-type").value);
@@ -235,8 +228,7 @@ const renderSelectedPkJob = (pkJob) => {
       hideElement($("#are-u-sure"));
     });
     $("#go-back-arrow").addEventListener("click", () => {
-      getPokeJobs()
-        .then((data) => renderPokeJobs(filterJobs(data)))
+      getPokeJobs().then((data) => renderPokeJobs(filterJobs(data)))
         .catch(() => alert(`Sorry, database is not available at the time :(`));
     });
     $("#edit-job").addEventListener("click", () => {
@@ -318,67 +310,7 @@ $("#clear-button").addEventListener("click", (e) => {
 });
 
 // Pkmn sprites in menu
-const pokeLetters = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-];
+const pokeLetters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",1,2,3,4,5,6,7,8,9];
 
 const getRandomChar = (pokeArray) => {
   let randomIndex = Math.floor(Math.random() * pokeArray.length);
@@ -437,8 +369,7 @@ $("#new-pkjob").addEventListener("submit", (e) => {
   if (maxThreeTypes().length === 0) {
     $("#choose-pktype").innerHTML = "";
     $("#choose-pktype").style.color = "red";
-    return ($("#choose-pktype").innerHTML =
-      "Please choose at least one poké-type");
+    return ($("#choose-pktype").innerHTML = "Please choose at least one poké-type");
   } else {
     postPokeJob();
     hideElement($("#container-modal"));
