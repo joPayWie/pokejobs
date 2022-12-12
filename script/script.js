@@ -218,7 +218,7 @@ const renderSelectedPkJob = (pkJob) => {
                       location
                     )}</p>
                     <p class="my-1"><strong>Level required: </strong>${level}</p>
-                    <address class="my-1"><strong>Contact: </strong>${email}</address>
+                    <address class="my-1 text-sm md:text-base"><strong>Contact: </strong>${email}</address>
                     <div class="flex">
                         <div class="w-1/4">
                             <button class="flex items-center bg-[#36A95E] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="edit-job">Edit</button> <button class="flex items-center bg-[#ED6764] mt-2 px-3 py-1 rounded text-white hover:bg-[#53AEE5]" job-id="${id}" id="unhideDelete">Delete</button>
